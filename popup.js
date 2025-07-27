@@ -142,15 +142,15 @@ function displayTasks() {
             <div class="task-header">
                 <h3 class="task-name">${escapeHtml(task.name)}</h3>
                 <div class="task-actions">
-                    <button onclick="toggleTask('${task.id}')" title="${task.isActive ? 'Mettre en pause' : 'Activer'}">
+                    <button class="toggle-btn" data-task-id="${task.id}" title="${task.isActive ? 'Mettre en pause' : 'Activer'}">
                         ${task.isActive ? '⏸️' : '▶️'}
                     </button>
-                    <button onclick="deleteTask('${task.id}')" title="Supprimer">🗑️</button>
+                    <button class="delete-btn" data-task-id="${task.id}" title="Supprimer">🗑️</button>
                 </div>
             </div>
             <div class="task-meta">
                 <span class="task-status ${task.isActive ? 'active' : 'paused'}">
-                    ${task.isActive ? 'Actif' : 'Pausé'}
+                    ${task.isActive ? 'Actif' : 'Pause'}
                 </span> • 
                 ${task.description} • 
                 Créé le ${new Date(task.createdAt).toLocaleDateString()}
@@ -158,6 +158,30 @@ function displayTasks() {
             <div class="task-prompt">${escapeHtml(task.prompt)}</div>
         </div>
     `).join('');
+    
+    // Ajouter les gestionnaires d'événements aux boutons
+    attachTaskEventListeners();
+}
+
+// Attacher les gestionnaires d'événements aux boutons des tâches
+function attachTaskEventListeners() {
+    // Boutons toggle (pause/play)
+    const toggleButtons = document.querySelectorAll('.toggle-btn');
+    toggleButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const taskId = e.target.getAttribute('data-task-id');
+            toggleTask(taskId);
+        });
+    });
+    
+    // Boutons delete
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const taskId = e.target.getAttribute('data-task-id');
+            deleteTask(taskId);
+        });
+    });
 }
 
 // Basculer l'état actif/pause d'une tâche
