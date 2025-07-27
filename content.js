@@ -1,6 +1,6 @@
 // Content script pour interagir avec la page Comet
 
-console.log('Content script Comet Cron Tasks chargé');
+console.log('Content script AutoAgent chargé');
 
 // Écouter les messages du service worker
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -243,4 +243,4 @@ observer.observe(document.body, {
     subtree: true
 });
 
-console.log('Content script Comet Cron Tasks prêt');
+console.log('Content script AutoAgent prêt');

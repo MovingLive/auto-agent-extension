@@ -65,7 +65,7 @@ function waitForTabLoad(tabId) {
 // Gérer l'installation de l'extension
 chrome.runtime.onInstalled.addListener((details) => {
     if (details.reason === 'install') {
-        console.log('Extension Comet Cron Tasks installée');
+        console.log('Extension AutoAgent installée');
         
         // Initialiser le storage si nécessaire
         chrome.storage.local.get(['cronTasks'], (result) => {
@@ -74,7 +74,7 @@ chrome.runtime.onInstalled.addListener((details) => {
             }
         });
     } else if (details.reason === 'update') {
-        console.log('Extension Comet Cron Tasks mise à jour');
+        console.log('Extension AutoAgent mise à jour');
         
         // Recharger les alarmes existantes
         reloadExistingAlarms();
@@ -137,4 +137,4 @@ async function debugAlarms() {
 // Exposer la fonction de débogage globalement pour les tests
 globalThis.debugAlarms = debugAlarms;
 
-console.log('Service Worker Comet Cron Tasks initialisé');
+console.log('Service Worker AutoAgent initialisé');

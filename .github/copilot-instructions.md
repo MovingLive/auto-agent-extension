@@ -1,4 +1,4 @@
-# 🤖 Copilot Instructions for comet-cron-extension
+# 🤖 Copilot Instructions for AutoAgent
 
 ## Vue d'ensemble
 

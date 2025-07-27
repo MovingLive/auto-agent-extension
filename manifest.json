@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Comet Cron Tasks",
+  "name": "AutoAgent",
   "version": "1.0",
   "description": "Extension pour créer des tâches récurrentes avec des prompts dans Comet",
   "permissions": [
@@ -19,7 +19,7 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Comet Cron Tasks"
+    "default_title": "AutoAgent"
   },
   "content_scripts": [
     {

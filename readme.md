@@ -1,4 +1,4 @@
-# 🚀 Comet Cron Extension
+# 🤖 AutoAgent
 
 Extension Chrome pour automatiser l'exécution de prompts récurrents dans Perplexity Comet.
 

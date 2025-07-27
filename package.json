@@ -1,5 +1,5 @@
 {
-  "name": "comet-cron-tasks",
+  "name": "autoagent",
   "version": "1.0.0",
   "description": "Extension Chrome pour créer des tâches récurrentes dans Perplexity Comet",
   "main": "background.js",
@@ -20,12 +20,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/votre-username/comet-cron-tasks"
+    "url": "https://github.com/votre-username/autoagent"
   },
   "bugs": {
-    "url": "https://github.com/votre-username/comet-cron-tasks/issues"
+    "url": "https://github.com/votre-username/autoagent/issues"
   },
-  "homepage": "https://github.com/votre-username/comet-cron-tasks#readme",
+  "homepage": "https://github.com/votre-username/autoagent#readme",
   "devDependencies": {},
   "dependencies": {},
   "engines": {

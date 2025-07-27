@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Script de construction pour l'extension Comet Cron Tasks
+# Script de construction pour l'extension AutoAgent
 # Ce script automatise la création du package d'extension
 
-echo "🚀 Construction de l'extension Comet Cron Tasks..."
+echo "🚀 Construction de l'extension AutoAgent..."
 
 # Créer le dossier de build
 BUILD_DIR="comet-cron-extension"
@@ -77,7 +77,7 @@ EOF
 echo "📜 Création du script d'installation..."
 cat > "$BUILD_DIR/install.sh" << 'EOF'
 #!/bin/bash
-echo "🚀 Installation de l'extension Comet Cron Tasks"
+echo "🚀 Installation de l'extension AutoAgent"
 echo ""
 echo "📋 Instructions d'installation :"
 echo "1. Ouvrez Chrome ou Comet"
@@ -144,4 +144,4 @@ echo "1. Allez dans le dossier $BUILD_DIR"
 echo "2. Suivez les instructions dans install.sh"
 echo "3. Ou utilisez le fichier ZIP créé pour une installation facile"
 echo ""
-echo "🚀 Bonne utilisation de votre extension Comet Cron Tasks !"
+echo "🚀 Bonne utilisation de votre extension AutoAgent !"
