@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Test AutoAgent Translation</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .language-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .language-btn.active {
+            background: #1e40af;
+        }
+        .result {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test du système de traduction AutoAgent</h1>
+    
+    <div class="test-section">
+        <h2>Sélection de langue</h2>
+        <button type="button" class="language-btn" data-lang="fr">🇫🇷 Français</button>
+        <button type="button" class="language-btn" data-lang="en">🇬🇧 English</button>
+    </div>
+
+    <div class="test-section">
+        <h2>Tests de traduction</h2>
+        
+        <h3>Textes simples</h3>
+        <div class="result">
+            <strong>Titre de l'app:</strong> <span data-i18n="appTitle">🤖 AutoAgent</span>
+        </div>
+        <div class="result">
+            <strong>Nouvelle tâche:</strong> <span data-i18n="newTask">➕ Nouvelle tâche</span>
+        </div>
+        <div class="result">
+            <strong>Mes tâches:</strong> <span data-i18n="myTasks">📋 Mes tâches</span>
+        </div>
+
+        <h3>Textes avec paramètres</h3>
+        <div class="result">
+            <strong>Compteur (3 tâches):</strong> <span id="taskCount">3 tâches actives</span>
+        </div>
+
+        <h3>Descriptions de fréquence</h3>
+        <div class="result">
+            <strong>Toutes les 2 heures:</strong> <span id="freq1">Toutes les 2 heures</span>
+        </div>
+        <div class="result">
+            <strong>Tous les 5 jours:</strong> <span id="freq2">Tous les 5 jours</span>
+        </div>
+        <div class="result">
+            <strong>Toutes les 1 semaine:</strong> <span id="freq3">Toutes les 1 semaine</span>
+        </div>
+
+        <h3>Input placeholders</h3>
+        <div class="result">
+            <input type="text" data-i18n="taskNamePlaceholder" placeholder="Ex: Vérification quotidienne des actualités" style="width: 100%; padding: 8px;">
+        </div>
+        <div class="result">
+            <textarea data-i18n="promptPlaceholder" placeholder="Écrivez votre prompt ici..." style="width: 100%; padding: 8px; height: 60px;"></textarea>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>État actuel</h2>
+        <div class="result">
+            <strong>Langue active:</strong> <span id="currentLang">fr</span>
+        </div>
+        <div class="result">
+            <strong>Dernière mise à jour:</strong> <span id="lastUpdate">-</span>
+        </div>
+    </div>
+
+    <!-- Simulation du système Chrome pour le test -->
+    <script>
+        // Simulation de chrome.storage pour le test
+        window.chrome = {
+            storage: {
+                local: {
+                    get: function(keys) {
+                        return Promise.resolve({ language: 'fr' });
+                    },
+                    set: function(data) {
+                        return Promise.resolve();
+                    }
+                }
+            }
+        };
+    </script>
+
+    <script src="i18n.js"></script>
+    <script>
+        // Configuration des boutons de langue
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                window.i18n.setLanguage(lang);
+            });
+        });
+
+        // Mise à jour de l'affichage de la langue actuelle
+        document.addEventListener('languageChanged', (e) => {
+            document.getElementById('currentLang').textContent = e.detail.language;
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+            
+            // Mettre à jour les exemples avec paramètres
+            document.getElementById('taskCount').textContent = window.i18n.t('activeTasksCount', { count: 3 });
+            
+            // Mettre à jour les descriptions de fréquence
+            document.getElementById('freq1').textContent = window.i18n.getFrequencyDescription(2, 'hours');
+            document.getElementById('freq2').textContent = window.i18n.getFrequencyDescription(5, 'days');
+            document.getElementById('freq3').textContent = window.i18n.getFrequencyDescription(1, 'week');
+        });
+
+        // Initialisation
+        window.i18n.initialize();
+    </script>
+</body>
+</html>

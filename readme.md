@@ -2,7 +2,15 @@
 
 Extension Chrome pour automatiser l'exécution de prompts récurrents dans Perplexity Comet.
 
-## ✨ Nouvelle Interface Simplifiée
+## 🌍 **NOUVEAU : Support Multilingue**
+
+L'extension prend maintenant en charge **deux langues** :
+- 🇫🇷 **Français** (langue par défaut)
+- 🇬🇧 **Anglais**
+
+**Changement instantané** : Cliquez sur les drapeaux en haut à droite pour basculer entre les langues. Votre choix est automatiquement sauvegardé.
+
+## ✨ Interface Simplifiée
 
 L'interface a été **complètement refonduite** pour une expérience utilisateur optimale :
 
@@ -14,6 +22,7 @@ L'interface a été **complètement refonduite** pour une expérience utilisateu
   2. Fréquence (nombre + unité)
   3. Prompt
 - **Gestion intuitive** : liste des tâches avec actions directes
+- **Boutons de langue** : 🇫🇷 🇬🇧 en haut à droite pour changer la langue
 
 ### 📅 Planification Simplifiée
 

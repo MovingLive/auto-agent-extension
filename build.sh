@@ -6,7 +6,7 @@
 echo "🚀 Construction de l'extension AutoAgent..."
 
 # Créer le dossier de build
-BUILD_DIR="comet-cron-extension"
+BUILD_DIR="auto-agent-extension"
 if [ -d "$BUILD_DIR" ]; then
     echo "📁 Suppression du dossier existant..."
     rm -rf "$BUILD_DIR"
@@ -95,9 +95,9 @@ chmod +x "$BUILD_DIR/install.sh"
 if command -v zip >/dev/null 2>&1; then
     echo "📦 Création du package ZIP..."
     cd "$BUILD_DIR"
-    zip -r "../comet-cron-extension-v1.0.0.zip" .
+    zip -r "../auto-agent-extension-v1.0.0.zip" .
     cd ..
-    echo "✅ Package créé: comet-cron-extension-v1.0.0.zip"
+    echo "✅ Package créé: auto-agent-extension-v1.0.0.zip"
 fi
 
 # Vérifier l'intégrité des fichiers

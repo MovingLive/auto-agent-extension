@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Test Détection Automatique de Langue - AutoAgent</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f9fafb;
+        }
+        .test-section {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 20px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .language-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .language-btn:hover {
+            background: #2563eb;
+        }
+        .language-btn.active {
+            background: #1e40af;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+        .info-box {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 12px 0;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 13px;
+        }
+        .success { border-left: 4px solid #10b981; background: #f0fdf4; }
+        .info { border-left: 4px solid #3b82f6; background: #eff6ff; }
+        .warning { border-left: 4px solid #f59e0b; background: #fffbeb; }
+        .test-button {
+            background: #6b7280;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .test-button:hover {
+            background: #4b5563;
+        }
+        .demo-text {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌍 Test de Détection Automatique de Langue</h1>
+    <p>Cette page teste le nouveau système de détection automatique de la langue du navigateur pour AutoAgent.</p>
+    
+    <div class="test-section">
+        <h2>🔍 Informations du Navigateur</h2>
+        <div class="info-box info">
+            <strong>Langue principale:</strong> <span id="browserLang">-</span><br>
+            <strong>Langues acceptées:</strong> <span id="browserLangs">-</span><br>
+            <strong>Langue détectée par AutoAgent:</strong> <span id="detectedLang">-</span>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>⚙️ Contrôles de Test</h2>
+        <div style="margin-bottom: 16px;">
+            <button type="button" class="test-button" onclick="resetDetection()">🔄 Réinitialiser la détection</button>
+            <button type="button" class="test-button" onclick="showLanguageInfo()">📊 Afficher les infos</button>
+            <button type="button" class="test-button" onclick="triggerDetection()">🎯 Déclencher détection</button>
+        </div>
+        
+        <h3>Sélection manuelle (pour tester la persistance)</h3>
+        <button type="button" class="language-btn" data-lang="fr">🇫🇷 Français</button>
+        <button type="button" class="language-btn" data-lang="en">🇬🇧 English</button>
+    </div>
+
+    <div class="test-section">
+        <h2>📋 État Actuel du Système</h2>
+        <div id="systemStatus" class="info-box">
+            Chargement en cours...
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🎨 Démonstration de l'Interface</h2>
+        <div class="demo-text">
+            <h3 data-i18n="appTitle">🤖 AutoAgent</h3>
+            <p><strong data-i18n="newTask">➕ Nouvelle tâche</strong></p>
+            <p><span data-i18n="frequency">Fréquence</span>: <span id="demoFreq">-</span></p>
+            <p><span data-i18n="active">Actif</span> • <span id="demoCount">-</span></p>
+            <button type="button" data-i18n="createTask">✅ Créer la tâche</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>📝 Journal des Événements</h2>
+        <div id="eventLog" class="info-box" style="max-height: 200px; overflow-y: auto;">
+            Aucun événement pour le moment...
+        </div>
+    </div>
+
+    <!-- Simulation du système Chrome pour le test -->
+    <script>
+        // Simulation de chrome.storage pour le test
+        const mockStorage = {};
+        window.chrome = {
+            storage: {
+                local: {
+                    get: function(keys) {
+                        const result = {};
+                        if (Array.isArray(keys)) {
+                            keys.forEach(key => {
+                                if (mockStorage[key] !== undefined) {
+                                    result[key] = mockStorage[key];
+                                }
+                            });
+                        } else if (typeof keys === 'string') {
+                            if (mockStorage[keys] !== undefined) {
+                                result[keys] = mockStorage[keys];
+                            }
+                        }
+                        return Promise.resolve(result);
+                    },
+                    set: function(data) {
+                        Object.assign(mockStorage, data);
+                        logEvent(`Storage mis à jour: ${JSON.stringify(data)}`);
+                        return Promise.resolve();
+                    },
+                    remove: function(keys) {
+                        if (Array.isArray(keys)) {
+                            keys.forEach(key => delete mockStorage[key]);
+                        } else {
+                            delete mockStorage[keys];
+                        }
+                        logEvent(`Storage nettoyé: ${JSON.stringify(keys)}`);
+                        return Promise.resolve();
+                    }
+                }
+            }
+        };
+
+        // Fonction de log des événements
+        function logEvent(message) {
+            const log = document.getElementById('eventLog');
+            const time = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.innerHTML = `<span style="color: #6b7280;">[${time}]</span> ${message}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        // Afficher les informations du navigateur
+        function updateBrowserInfo() {
+            document.getElementById('browserLang').textContent = navigator.language || 'Non disponible';
+            document.getElementById('browserLangs').textContent = navigator.languages ? navigator.languages.join(', ') : 'Non disponible';
+        }
+
+        // Fonctions de test
+        async function resetDetection() {
+            await window.i18n.resetLanguageDetection();
+            logEvent('🔄 Détection automatique réinitialisée');
+            updateSystemStatus();
+        }
+
+        async function showLanguageInfo() {
+            const info = await window.i18n.getLanguageInfo();
+            logEvent(`📊 Infos: ${JSON.stringify(info, null, 2)}`);
+            console.log('Language Info:', info);
+        }
+
+        async function triggerDetection() {
+            const detectedLang = window.i18n.detectBrowserLanguage();
+            document.getElementById('detectedLang').textContent = detectedLang;
+            logEvent(`🎯 Langue détectée: ${detectedLang}`);
+        }
+
+        async function updateSystemStatus() {
+            const info = await window.i18n.getLanguageInfo();
+            const status = document.getElementById('systemStatus');
+            
+            status.innerHTML = `
+                <strong>Langue actuelle:</strong> ${info.currentLanguage}<br>
+                <strong>Détectée automatiquement:</strong> ${info.isAutoDetected ? 'Oui' : 'Non'}<br>
+                <strong>Définie manuellement:</strong> ${info.isManuallySet ? 'Oui' : 'Non'}<br>
+                <strong>Langue du navigateur:</strong> ${info.browserLanguage}<br>
+                <strong>Langues supportées:</strong> ${info.supportedLanguages.join(', ')}
+            `;
+            
+            // Mettre à jour les exemples
+            document.getElementById('demoFreq').textContent = window.i18n.getFrequencyDescription(2, 'hours');
+            document.getElementById('demoCount').textContent = window.i18n.t('activeTasksCount', { count: 3 });
+        }
+    </script>
+
+    <script src="i18n.js"></script>
+    <script>
+        // Configuration des boutons de langue
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                window.i18n.setLanguage(lang);
+                logEvent(`🌍 Langue changée manuellement vers: ${lang}`);
+            });
+        });
+
+        // Écouter les changements de langue
+        document.addEventListener('languageChanged', (e) => {
+            logEvent(`🔄 Interface mise à jour en: ${e.detail.language}`);
+            updateSystemStatus();
+        });
+
+        // Initialisation
+        window.i18n.initialize().then(() => {
+            updateBrowserInfo();
+            triggerDetection();
+            updateSystemStatus();
+            logEvent('✅ Système de traduction initialisé');
+        });
+    </script>
+</body>
+</html>

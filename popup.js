@@ -3,7 +3,10 @@ let currentTasks = [];
 let editingTaskId = null; // Pour savoir si on est en mode édition
 
 // Initialisation
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    // Initialiser le système de traduction
+    await window.i18n.initialize();
+    
     setupEventListeners();
     loadTasks();
     updateTaskCount();
@@ -11,6 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Configuration des écouteurs d'événements
 function setupEventListeners() {
+    // Boutons de langue
+    document.querySelectorAll('.language-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const lang = btn.getAttribute('data-lang');
+            window.i18n.setLanguage(lang);
+        });
+    });
+    
     // Bouton de création de tâche
     const createBtn = document.getElementById('createTaskBtn');
     createBtn.addEventListener('click', handleCreateOrUpdate);
@@ -28,6 +39,12 @@ function setupEventListeners() {
         if (e.key === 'Enter' && e.ctrlKey) {
             handleCreateOrUpdate();
         }
+    });
+    
+    // Écouter les changements de langue
+    document.addEventListener('languageChanged', () => {
+        updateTaskCount();
+        loadTasks(); // Recharger les tâches pour mettre à jour les textes
     });
 }
 
@@ -49,17 +66,17 @@ function createTask() {
     
     // Validation
     if (!taskName) {
-        showNotification('Veuillez saisir un nom pour la tâche', 'error');
+        showNotification(window.i18n.t('pleaseEnterName'), 'error');
         return;
     }
     
     if (!promptText) {
-        showNotification('Veuillez saisir un prompt', 'error');
+        showNotification(window.i18n.t('pleaseEnterPrompt'), 'error');
         return;
     }
     
     if (!intervalValue || intervalValue < 1) {
-        showNotification('Veuillez saisir un intervalle valide', 'error');
+        showNotification(window.i18n.t('pleaseEnterInterval'), 'error');
         return;
     }
     
@@ -70,19 +87,19 @@ function createTask() {
     switch(timeUnit) {
         case 'minutes':
             intervalInMinutes = intervalValue;
-            description = `Toutes les ${intervalValue} minute${intervalValue > 1 ? 's' : ''}`;
+            description = window.i18n.getFrequencyDescription(intervalValue, 'minutes');
             break;
         case 'hours':
             intervalInMinutes = intervalValue * 60;
-            description = `Toutes les ${intervalValue} heure${intervalValue > 1 ? 's' : ''}`;
+            description = window.i18n.getFrequencyDescription(intervalValue, 'hours');
             break;
         case 'days':
             intervalInMinutes = intervalValue * 24 * 60;
-            description = `Tous les ${intervalValue} jour${intervalValue > 1 ? 's' : ''}`;
+            description = window.i18n.getFrequencyDescription(intervalValue, 'days');
             break;
         case 'weeks':
             intervalInMinutes = intervalValue * 7 * 24 * 60;
-            description = `Toutes les ${intervalValue} semaine${intervalValue > 1 ? 's' : ''}`;
+            description = window.i18n.getFrequencyDescription(intervalValue, 'weeks');
             break;
     }
     
@@ -110,7 +127,7 @@ function createTask() {
                 periodInMinutes: intervalInMinutes
             });
             
-            showNotification('Tâche créée avec succès!', 'success');
+            showNotification(window.i18n.t('taskCreated'), 'success');
             
             // Réinitialiser le formulaire
             resetForm();
@@ -131,8 +148,10 @@ function resetForm() {
     
     // Remettre en mode création
     editingTaskId = null;
-    document.getElementById('sectionTitle').textContent = '➕ Nouvelle tâche';
-    document.getElementById('createTaskBtn').textContent = '✅ Créer la tâche';
+    document.getElementById('sectionTitle').setAttribute('data-i18n', 'newTask');
+    document.getElementById('sectionTitle').textContent = window.i18n.t('newTask');
+    document.getElementById('createTaskBtn').setAttribute('data-i18n', 'createTask');
+    document.getElementById('createTaskBtn').textContent = window.i18n.t('createTask');
     document.getElementById('cancelEditBtn').style.display = 'none';
 }
 
@@ -168,8 +187,10 @@ function editTask(taskId) {
     
     // Passer en mode édition
     editingTaskId = taskId;
-    document.getElementById('sectionTitle').textContent = '✏️ Modifier la tâche';
-    document.getElementById('createTaskBtn').textContent = '✅ Modifier la tâche';
+    document.getElementById('sectionTitle').setAttribute('data-i18n', 'editTask');
+    document.getElementById('sectionTitle').textContent = window.i18n.t('editTask');
+    document.getElementById('createTaskBtn').setAttribute('data-i18n', 'updateTask');
+    document.getElementById('createTaskBtn').textContent = window.i18n.t('updateTask');
     document.getElementById('cancelEditBtn').style.display = 'inline-block';
     
     // Faire défiler vers le haut
@@ -185,17 +206,17 @@ function updateTask() {
     
     // Validation
     if (!taskName) {
-        showNotification('Veuillez saisir un nom pour la tâche', 'error');
+        showNotification(window.i18n.t('pleaseEnterName'), 'error');
         return;
     }
     
     if (!promptText) {
-        showNotification('Veuillez saisir un prompt', 'error');
+        showNotification(window.i18n.t('pleaseEnterPrompt'), 'error');
         return;
     }
     
     if (!intervalValue || intervalValue < 1) {
-        showNotification('Veuillez saisir un intervalle valide', 'error');
+        showNotification(window.i18n.t('pleaseEnterInterval'), 'error');
         return;
     }
     
@@ -206,19 +227,19 @@ function updateTask() {
     switch(timeUnit) {
         case 'minutes':
             intervalInMinutes = intervalValue;
-            description = `Toutes les ${intervalValue} minute${intervalValue > 1 ? 's' : ''}`;
+            description = window.i18n.getFrequencyDescription(intervalValue, 'minutes');
             break;
         case 'hours':
             intervalInMinutes = intervalValue * 60;
-            description = `Toutes les ${intervalValue} heure${intervalValue > 1 ? 's' : ''}`;
+            description = window.i18n.getFrequencyDescription(intervalValue, 'hours');
             break;
         case 'days':
             intervalInMinutes = intervalValue * 24 * 60;
-            description = `Tous les ${intervalValue} jour${intervalValue > 1 ? 's' : ''}`;
+            description = window.i18n.getFrequencyDescription(intervalValue, 'days');
             break;
         case 'weeks':
             intervalInMinutes = intervalValue * 7 * 24 * 60;
-            description = `Toutes les ${intervalValue} semaine${intervalValue > 1 ? 's' : ''}`;
+            description = window.i18n.getFrequencyDescription(intervalValue, 'weeks');
             break;
     }
     
@@ -247,7 +268,7 @@ function updateTask() {
                 });
             }
             
-            showNotification('Tâche modifiée avec succès!', 'success');
+            showNotification(window.i18n.t('taskUpdated'), 'success');
             
             // Réinitialiser le formulaire
             resetForm();
@@ -290,19 +311,19 @@ function displayTasks() {
             <div class="task-header">
                 <h3 class="task-name">${escapeHtml(task.name)}</h3>
                 <div class="task-actions">
-                    <button class="edit-btn" data-task-id="${task.id}" title="Modifier">✏️</button>
-                    <button class="toggle-btn" data-task-id="${task.id}" title="${task.isActive ? 'Mettre en pause' : 'Activer'}">
+                    <button type="button" class="edit-btn" data-task-id="${task.id}" title="${window.i18n.t('editTooltip')}">✏️</button>
+                    <button type="button" class="toggle-btn" data-task-id="${task.id}" title="${task.isActive ? window.i18n.t('pauseTooltip') : window.i18n.t('activateTooltip')}">
                         ${task.isActive ? '⏸️' : '▶️'}
                     </button>
-                    <button class="delete-btn" data-task-id="${task.id}" title="Supprimer">🗑️</button>
+                    <button type="button" class="delete-btn" data-task-id="${task.id}" title="${window.i18n.t('deleteTooltip')}">🗑️</button>
                 </div>
             </div>
             <div class="task-meta">
                 <span class="task-status ${task.isActive ? 'active' : 'paused'}">
-                    ${task.isActive ? 'Actif' : 'Pausé'}
+                    ${task.isActive ? window.i18n.t('active') : window.i18n.t('paused')}
                 </span> • 
                 ${task.description} • 
-                Créé le ${new Date(task.createdAt).toLocaleDateString()}
+                ${window.i18n.t('createdOn')} ${new Date(task.createdAt).toLocaleDateString()}
             </div>
             <div class="task-prompt">${escapeHtml(task.prompt)}</div>
         </div>
@@ -359,11 +380,11 @@ function toggleTask(taskId) {
                     delayInMinutes: tasks[taskIndex].intervalInMinutes,
                     periodInMinutes: tasks[taskIndex].intervalInMinutes
                 });
-                showNotification('Tâche activée', 'success');
+                showNotification(window.i18n.t('taskActivated'), 'success');
             } else {
                 // Désactiver l'alarme
                 chrome.alarms.clear(taskId);
-                showNotification('Tâche mise en pause', 'success');
+                showNotification(window.i18n.t('taskPaused'), 'success');
             }
             
             loadTasks();
@@ -374,7 +395,7 @@ function toggleTask(taskId) {
 
 // Supprimer une tâche
 function deleteTask(taskId) {
-    if (!confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?')) {
+    if (!confirm(window.i18n.t('confirmDelete'))) {
         return;
     }
     
@@ -386,7 +407,7 @@ function deleteTask(taskId) {
             // Supprimer l'alarme
             chrome.alarms.clear(taskId);
             
-            showNotification('Tâche supprimée', 'success');
+            showNotification(window.i18n.t('taskDeleted'), 'success');
             loadTasks();
             updateTaskCount();
         });
@@ -401,9 +422,9 @@ function updateTaskCount() {
         const countElement = document.getElementById('activeTasksCount');
         
         if (activeTasks === 0) {
-            countElement.textContent = 'Aucune tâche active';
+            countElement.textContent = window.i18n.t('noActiveTasks');
         } else {
-            countElement.textContent = `${activeTasks} tâche${activeTasks > 1 ? 's' : ''} active${activeTasks > 1 ? 's' : ''}`;
+            countElement.textContent = window.i18n.t('activeTasksCount', { count: activeTasks });
         }
     });
 }

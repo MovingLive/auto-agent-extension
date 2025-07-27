@@ -6,7 +6,7 @@ Cette extension Chrome automatise l'exécution de prompts récurrents dans Perpl
 
 ## Consigne
 
-ne modifie rien dans le repertoire `./comet-cron-extension` c'est un dossier généré pour créer l'extension Chrome.
+ne modifie rien dans le repertoire `./auto-agent-extension` c'est un dossier généré pour créer l'extension Chrome.
 
 ## Architecture & Flux
 - **background.js** : Service worker qui gère la planification (API Chrome Alarms), la persistance des tâches (API Storage), et la communication avec les autres scripts.
@@ -15,7 +15,7 @@ ne modifie rien dans le repertoire `./comet-cron-extension` c'est un dossier gé
 - **manifest.json** : Définit les permissions (storage, tabs, alarms, activeTab, host_permissions) et les points d'entrée.
 
 ## Workflows Développeur
-- **Build/Packaging** : Utilisez `build.sh` pour zipper l'extension (`comet-cron-extension-v1.0.0.zip`).
+- **Build/Packaging** : Utilisez `build.sh` pour zipper l'extension (`auto-agent-extension-v1.0.0.zip`).
 - **Installation locale** : Chargez le dossier via `chrome://extensions/` en mode développeur.
 - **Debug** : Utilisez la console Chrome (`F12`) sur les pages Comet et dans l'inspecteur d'extension pour diagnostiquer les problèmes. Les logs sont principalement dans la console.
 - **Mise à jour** : Remplacez les fichiers, puis rechargez l'extension dans Chrome. Les tâches existantes sont préservées.

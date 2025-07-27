@@ -9,42 +9,48 @@
     <div class="container">
         <!-- Header simple -->
         <div class="header">
-            <h1>🤖 AutoAgent</h1>
+            <div class="header-top">
+                <h1 data-i18n="appTitle">🤖 AutoAgent</h1>
+                <div class="language-selector">
+                    <button type="button" class="language-btn" data-lang="fr">🇫🇷</button>
+                    <button type="button" class="language-btn" data-lang="en">🇬🇧</button>
+                </div>
+            </div>
             <div class="stats">
-                <span id="activeTasksCount">0 tâches actives</span>
+                <span id="activeTasksCount" data-i18n="noActiveTasks">Aucune tâche active</span>
             </div>
         </div>
 
         <!-- Section création -->
         <div class="create-section">
-            <h2 id="sectionTitle">➕ Nouvelle tâche</h2>
+            <h2 id="sectionTitle" data-i18n="newTask">➕ Nouvelle tâche</h2>
             <div class="input-group">
-                <label>Nom de la tâche</label>
-                <input type="text" id="taskName" placeholder="Ex: Vérification quotidienne des actualités">
+                <label data-i18n="taskName">Nom de la tâche</label>
+                <input type="text" id="taskName" data-i18n="taskNamePlaceholder" placeholder="Ex: Vérification quotidienne des actualités">
             </div>
 
             <div class="schedule-group">
-                <label>Fréquence</label>
+                <label data-i18n="frequency">Fréquence</label>
                 <div class="schedule-inputs">
-                    <span>Toutes les</span>
+                    <span data-i18n="frequencyEvery">Toutes les</span>
                     <input type="number" id="intervalValue" min="1" max="999" value="30">
                     <select id="timeUnit">
-                        <option value="minutes">minutes</option>
-                        <option value="hours">heures</option>
-                        <option value="days">jours</option>
-                        <option value="weeks">semaines</option>
+                        <option value="minutes" data-i18n="minutes">minutes</option>
+                        <option value="hours" data-i18n="hours">heures</option>
+                        <option value="days" data-i18n="days">jours</option>
+                        <option value="weeks" data-i18n="weeks">semaines</option>
                     </select>
                 </div>
             </div>
 
             <div class="input-group">
-                <label>Prompt</label>
-                <textarea id="promptText" placeholder="Écrivez votre prompt ici..." rows="4"></textarea>
+                <label data-i18n="prompt">Prompt</label>
+                <textarea id="promptText" data-i18n="promptPlaceholder" placeholder="Écrivez votre prompt ici..." rows="4"></textarea>
             </div>
 
             <div class="action-buttons">
-                <button type="button" id="createTaskBtn" class="btn-primary">✅ Créer la tâche</button>
-                <button type="button" id="cancelEditBtn" class="btn-secondary" style="display: none;">❌ Annuler</button>
+                <button type="button" id="createTaskBtn" class="btn-primary" data-i18n="createTask">✅ Créer la tâche</button>
+                <button type="button" id="cancelEditBtn" class="btn-secondary" data-i18n="cancel" style="display: none;">❌ Annuler</button>
             </div>
         </div>
 
@@ -54,15 +60,15 @@
         <!-- Section gestion -->
         <div class="manage-section">
             <div class="section-header">
-                <h2>📋 Mes tâches</h2>
-                <button type="button" id="refreshBtn" class="btn-icon" title="Actualiser">🔄</button>
+                <h2 data-i18n="myTasks">📋 Mes tâches</h2>
+                <button type="button" id="refreshBtn" class="btn-icon" data-i18n-title="refreshTooltip" title="Actualiser">🔄</button>
             </div>
 
             <div id="tasksList" class="tasks-list"></div>
 
             <div id="emptyState" class="empty-state" style="display: none;">
-                <p>🤖 Aucune tâche créée</p>
-                <p class="subtitle">Créez votre première tâche automatisée ci-dessus !</p>
+                <p data-i18n="noTasks">🤖 Aucune tâche créée</p>
+                <p class="subtitle" data-i18n="noTasksSubtitle">Créez votre première tâche automatisée ci-dessus !</p>
             </div>
         </div>
 
@@ -70,6 +76,7 @@
         <div id="notifications" class="notifications"></div>
     </div>
 
+    <script src="i18n.js"></script>
     <script src="popup.js"></script>
 </body>
 </html>
