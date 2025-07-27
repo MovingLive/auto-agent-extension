@@ -4,6 +4,10 @@
 
 Cette extension Chrome automatise l'exécution de prompts récurrents dans Perplexity Comet. Elle s'appuie sur quatre scripts principaux : `background.js` (gestion des alarmes et tâches), `content.js` (injection et interaction avec Comet), `popup.js`/`popup.html` (UI de gestion des tâches), et `manifest.json` (configuration de l'extension).
 
+## Consigne
+
+ne modifie rien dans le repertoire `./comet-cron-extension` c'est un dossier généré pour créer l'extension Chrome.
+
 ## Architecture & Flux
 - **background.js** : Service worker qui gère la planification (API Chrome Alarms), la persistance des tâches (API Storage), et la communication avec les autres scripts.
 - **content.js** : Injecté dans les pages Comet, il automatise la saisie et l'envoi des prompts. Les sélecteurs CSS sont adaptés à l'UI Comet : modifiez-les ici si l'interface change.

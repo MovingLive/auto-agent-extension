@@ -1,5 +1,6 @@
 // Variables globales
 let currentTasks = [];
+let editingTaskId = null; // Pour savoir si on est en mode édition
 
 // Initialisation
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,7 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
 function setupEventListeners() {
     // Bouton de création de tâche
     const createBtn = document.getElementById('createTaskBtn');
-    createBtn.addEventListener('click', createTask);
+    createBtn.addEventListener('click', handleCreateOrUpdate);
+    
+    // Bouton d'annulation
+    const cancelBtn = document.getElementById('cancelEditBtn');
+    cancelBtn.addEventListener('click', cancelEdit);
     
     // Bouton de rafraîchissement
     const refreshBtn = document.getElementById('refreshBtn');
@@ -21,9 +26,18 @@ function setupEventListeners() {
     // Raccourci clavier pour créer une tâche
     document.addEventListener('keypress', (e) => {
         if (e.key === 'Enter' && e.ctrlKey) {
-            createTask();
+            handleCreateOrUpdate();
         }
     });
+}
+
+// Gérer la création ou mise à jour d'une tâche
+function handleCreateOrUpdate() {
+    if (editingTaskId) {
+        updateTask();
+    } else {
+        createTask();
+    }
 }
 
 // Créer une nouvelle tâche
@@ -114,6 +128,140 @@ function resetForm() {
     document.getElementById('promptText').value = '';
     document.getElementById('intervalValue').value = '30';
     document.getElementById('timeUnit').value = 'minutes';
+    
+    // Remettre en mode création
+    editingTaskId = null;
+    document.getElementById('sectionTitle').textContent = '➕ Nouvelle tâche';
+    document.getElementById('createTaskBtn').textContent = '✅ Créer la tâche';
+    document.getElementById('cancelEditBtn').style.display = 'none';
+}
+
+// Passer en mode édition
+function editTask(taskId) {
+    const task = currentTasks.find(t => t.id === taskId);
+    if (!task) return;
+    
+    // Populer le formulaire
+    document.getElementById('taskName').value = task.name;
+    document.getElementById('promptText').value = task.prompt;
+    
+    // Calculer les valeurs d'intervalle à partir des minutes
+    let intervalValue, timeUnit;
+    const minutes = task.intervalInMinutes;
+    
+    if (minutes % (7 * 24 * 60) === 0) {
+        intervalValue = minutes / (7 * 24 * 60);
+        timeUnit = 'weeks';
+    } else if (minutes % (24 * 60) === 0) {
+        intervalValue = minutes / (24 * 60);
+        timeUnit = 'days';
+    } else if (minutes % 60 === 0) {
+        intervalValue = minutes / 60;
+        timeUnit = 'hours';
+    } else {
+        intervalValue = minutes;
+        timeUnit = 'minutes';
+    }
+    
+    document.getElementById('intervalValue').value = intervalValue;
+    document.getElementById('timeUnit').value = timeUnit;
+    
+    // Passer en mode édition
+    editingTaskId = taskId;
+    document.getElementById('sectionTitle').textContent = '✏️ Modifier la tâche';
+    document.getElementById('createTaskBtn').textContent = '✅ Modifier la tâche';
+    document.getElementById('cancelEditBtn').style.display = 'inline-block';
+    
+    // Faire défiler vers le haut
+    document.querySelector('.create-section').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Mettre à jour une tâche existante
+function updateTask() {
+    const taskName = document.getElementById('taskName').value.trim();
+    const promptText = document.getElementById('promptText').value.trim();
+    const intervalValue = parseInt(document.getElementById('intervalValue').value);
+    const timeUnit = document.getElementById('timeUnit').value;
+    
+    // Validation
+    if (!taskName) {
+        showNotification('Veuillez saisir un nom pour la tâche', 'error');
+        return;
+    }
+    
+    if (!promptText) {
+        showNotification('Veuillez saisir un prompt', 'error');
+        return;
+    }
+    
+    if (!intervalValue || intervalValue < 1) {
+        showNotification('Veuillez saisir un intervalle valide', 'error');
+        return;
+    }
+    
+    // Calcul de l'intervalle en minutes
+    let intervalInMinutes;
+    let description;
+    
+    switch(timeUnit) {
+        case 'minutes':
+            intervalInMinutes = intervalValue;
+            description = `Toutes les ${intervalValue} minute${intervalValue > 1 ? 's' : ''}`;
+            break;
+        case 'hours':
+            intervalInMinutes = intervalValue * 60;
+            description = `Toutes les ${intervalValue} heure${intervalValue > 1 ? 's' : ''}`;
+            break;
+        case 'days':
+            intervalInMinutes = intervalValue * 24 * 60;
+            description = `Tous les ${intervalValue} jour${intervalValue > 1 ? 's' : ''}`;
+            break;
+        case 'weeks':
+            intervalInMinutes = intervalValue * 7 * 24 * 60;
+            description = `Toutes les ${intervalValue} semaine${intervalValue > 1 ? 's' : ''}`;
+            break;
+    }
+    
+    chrome.storage.local.get(['cronTasks'], (result) => {
+        const tasks = result.cronTasks || [];
+        const taskIndex = tasks.findIndex(task => task.id === editingTaskId);
+        
+        if (taskIndex === -1) return;
+        
+        // Mettre à jour la tâche
+        tasks[taskIndex] = {
+            ...tasks[taskIndex],
+            name: taskName,
+            prompt: promptText,
+            intervalInMinutes: intervalInMinutes,
+            description: description
+        };
+        
+        chrome.storage.local.set({ cronTasks: tasks }, () => {
+            // Mettre à jour l'alarme si la tâche est active
+            if (tasks[taskIndex].isActive) {
+                chrome.alarms.clear(editingTaskId);
+                chrome.alarms.create(editingTaskId, {
+                    delayInMinutes: intervalInMinutes,
+                    periodInMinutes: intervalInMinutes
+                });
+            }
+            
+            showNotification('Tâche modifiée avec succès!', 'success');
+            
+            // Réinitialiser le formulaire
+            resetForm();
+            
+            // Recharger la liste
+            loadTasks();
+            updateTaskCount();
+        });
+    });
+}
+
+// Annuler l'édition
+function cancelEdit() {
+    resetForm();
 }
 
 // Charger et afficher les tâches
@@ -142,6 +290,7 @@ function displayTasks() {
             <div class="task-header">
                 <h3 class="task-name">${escapeHtml(task.name)}</h3>
                 <div class="task-actions">
+                    <button class="edit-btn" data-task-id="${task.id}" title="Modifier">✏️</button>
                     <button class="toggle-btn" data-task-id="${task.id}" title="${task.isActive ? 'Mettre en pause' : 'Activer'}">
                         ${task.isActive ? '⏸️' : '▶️'}
                     </button>
@@ -150,7 +299,7 @@ function displayTasks() {
             </div>
             <div class="task-meta">
                 <span class="task-status ${task.isActive ? 'active' : 'paused'}">
-                    ${task.isActive ? 'Actif' : 'Pause'}
+                    ${task.isActive ? 'Actif' : 'Pausé'}
                 </span> • 
                 ${task.description} • 
                 Créé le ${new Date(task.createdAt).toLocaleDateString()}
@@ -165,6 +314,15 @@ function displayTasks() {
 
 // Attacher les gestionnaires d'événements aux boutons des tâches
 function attachTaskEventListeners() {
+    // Boutons edit
+    const editButtons = document.querySelectorAll('.edit-btn');
+    editButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const taskId = e.target.getAttribute('data-task-id');
+            editTask(taskId);
+        });
+    });
+    
     // Boutons toggle (pause/play)
     const toggleButtons = document.querySelectorAll('.toggle-btn');
     toggleButtons.forEach(btn => {
