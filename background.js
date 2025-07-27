@@ -21,27 +21,26 @@ async function executeTask(taskId) {
         
         console.log('Exécution de la tâche:', task.name);
         
-        // Créer un nouvel onglet Comet
+        // Créer un nouvel onglet avec l'URL Perplexity
+        // Laisser Perplexity gérer le formatage et l'ID automatiquement
+        const encodedPrompt = encodeURIComponent(task.prompt);
+        const perplexityUrl = `https://www.perplexity.ai/search?q=${encodedPrompt}`;
+        
         const tab = await chrome.tabs.create({
-            url: 'https://comet.perplexity.ai/',
+            url: perplexityUrl,
             active: false // L'onglet sera créé en arrière-plan
         });
         
-        // Attendre que la page soit chargée
-        await waitForTabLoad(tab.id);
+        console.log('Onglet créé avec ID:', tab.id, 'URL:', perplexityUrl);
         
-        // Injecter le prompt dans la page
-        await chrome.tabs.sendMessage(tab.id, {
-            action: 'executePrompt',
-            prompt: task.prompt,
-            taskId: taskId
-        });
+        // Attendre que l'onglet soit chargé
+        await waitForTabLoad(tab.id);
         
         // Mettre à jour la date de dernière exécution
         task.lastRun = new Date().toISOString();
         const updatedTasks = tasks.map(t => t.id === taskId ? task : t);
         await chrome.storage.local.set({ cronTasks: updatedTasks });
-        
+                
     } catch (error) {
         console.error('Erreur lors de l\'exécution de la tâche:', error);
     }
