@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Comet Cron Extension</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header simple -->
+        <div class="header">
+            <h1>🚀 Comet Cron</h1>
+            <div class="stats">
+                <span id="activeTasksCount">0 tâches actives</span>
+            </div>
+        </div>
+
+        <!-- Section création -->
+        <div class="create-section">
+            <h2>➕ Nouvelle tâche</h2>
+            <div class="input-group">
+                <label>Nom de la tâche</label>
+                <input type="text" id="taskName" placeholder="Ex: Vérification quotidienne des actualités">
+            </div>
+
+            <div class="schedule-group">
+                <label>Fréquence</label>
+                <div class="schedule-inputs">
+                    <span>Toutes les</span>
+                    <input type="number" id="intervalValue" min="1" max="999" value="30">
+                    <select id="timeUnit">
+                        <option value="minutes">minutes</option>
+                        <option value="hours">heures</option>
+                        <option value="days">jours</option>
+                        <option value="weeks">semaines</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Prompt</label>
+                <textarea id="promptText" placeholder="Écrivez votre prompt ici..." rows="4"></textarea>
+            </div>
+
+            <div class="action-buttons">
+                <button type="button" id="createTaskBtn" class="btn-primary">✅ Créer la tâche</button>
+            </div>
+        </div>
+
+        <!-- Séparateur -->
+        <div class="separator"></div>
+
+        <!-- Section gestion -->
+        <div class="manage-section">
+            <div class="section-header">
+                <h2>📋 Mes tâches</h2>
+                <button type="button" id="refreshBtn" class="btn-icon" title="Actualiser">🔄</button>
+            </div>
+
+            <div id="tasksList" class="tasks-list"></div>
+
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <p>🤖 Aucune tâche créée</p>
+                <p class="subtitle">Créez votre première tâche automatisée ci-dessus !</p>
+            </div>
+        </div>
+
+        <!-- Notifications -->
+        <div id="notifications" class="notifications"></div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

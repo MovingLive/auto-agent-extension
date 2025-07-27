@@ -1,0 +1,34 @@
+{
+  "name": "comet-cron-tasks",
+  "version": "1.0.0",
+  "description": "Extension Chrome pour créer des tâches récurrentes dans Perplexity Comet",
+  "main": "background.js",
+  "scripts": {
+    "build": "echo 'Extension prête pour le chargement manuel'",
+    "test": "echo 'Tests non configurés'",
+    "lint": "echo 'Linting non configuré'"
+  },
+  "keywords": [
+    "chrome-extension",
+    "comet",
+    "perplexity",
+    "automation",
+    "cron",
+    "tasks"
+  ],
+  "author": "Votre nom",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/votre-username/comet-cron-tasks"
+  },
+  "bugs": {
+    "url": "https://github.com/votre-username/comet-cron-tasks/issues"
+  },
+  "homepage": "https://github.com/votre-username/comet-cron-tasks#readme",
+  "devDependencies": {},
+  "dependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

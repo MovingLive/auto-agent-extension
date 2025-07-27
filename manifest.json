@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Comet Cron Tasks",
+  "version": "1.0",
+  "description": "Extension pour créer des tâches récurrentes avec des prompts dans Comet",
+  "permissions": [
+    "storage",
+    "tabs",
+    "alarms",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://comet.perplexity.ai/*",
+    "https://www.perplexity.ai/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Comet Cron Tasks"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://comet.perplexity.ai/*", "https://www.perplexity.ai/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
