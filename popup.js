@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await window.i18n.initialize();
     
     setupEventListeners();
+    setupVisualEffects();
     loadTasks();
     updateTaskCount();
 });
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // Configuration des écouteurs d'événements
 function setupEventListeners() {
     // Boutons de langue
-    document.querySelectorAll('.language-btn').forEach(btn => {
+    document.querySelectorAll('.language-btn, .language-btn-compact').forEach(btn => {
         btn.addEventListener('click', () => {
             const lang = btn.getAttribute('data-lang');
             window.i18n.setLanguage(lang);
@@ -30,9 +31,6 @@ function setupEventListeners() {
     const cancelBtn = document.getElementById('cancelEditBtn');
     cancelBtn.addEventListener('click', cancelEdit);
     
-    // Bouton de rafraîchissement
-    const refreshBtn = document.getElementById('refreshBtn');
-    refreshBtn.addEventListener('click', loadTasks);
     
     // Raccourci clavier pour créer une tâche
     document.addEventListener('keypress', (e) => {
@@ -306,7 +304,17 @@ function displayTasks() {
     
     emptyState.style.display = 'none';
     
-    tasksList.innerHTML = currentTasks.map(task => `
+    tasksList.innerHTML = currentTasks.map(task => {
+        // Affichage de l'heure de planification pour les tâches quotidiennes
+        let planningTime = '';
+        if (task.intervalInMinutes % (24 * 60) === 0) {
+            // Heure de création ou 00:00 si non précisé
+            const createdDate = new Date(task.createdAt);
+            const hours = String(createdDate.getHours()).padStart(2, '0');
+            const minutes = String(createdDate.getMinutes()).padStart(2, '0');
+            planningTime = `à ${hours}:${minutes}`;
+        }
+        return `
         <div class="task-item" data-task-id="${task.id}">
             <div class="task-header">
                 <h3 class="task-name">${escapeHtml(task.name)}</h3>
@@ -322,12 +330,13 @@ function displayTasks() {
                 <span class="task-status ${task.isActive ? 'active' : 'paused'}">
                     ${task.isActive ? window.i18n.t('active') : window.i18n.t('paused')}
                 </span> • 
-                ${task.description} • 
-                ${window.i18n.t('createdOn')} ${new Date(task.createdAt).toLocaleDateString()}
+                ${task.description}
+                ${planningTime ? ' • ' + planningTime : ''}
             </div>
             <div class="task-prompt">${escapeHtml(task.prompt)}</div>
         </div>
-    `).join('');
+        `;
+    }).join('');
     
     // Ajouter les gestionnaires d'événements aux boutons
     attachTaskEventListeners();
@@ -455,4 +464,40 @@ function escapeHtml(unsafe) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+}
+
+// Effets visuels dynamiques
+function setupVisualEffects() {
+    // Effet de brillance sur les boutons
+    const buttons = document.querySelectorAll('.btn-primary, .language-btn, .language-btn-compact');
+    buttons.forEach(button => {
+        button.addEventListener('mouseenter', () => {
+            button.style.boxShadow = '0 0 20px rgba(0, 245, 255, 0.5)';
+        });
+        button.addEventListener('mouseleave', () => {
+            button.style.boxShadow = '';
+        });
+    });
+
+    // Effet de typing sur les placeholders
+    const inputs = document.querySelectorAll('input[type="text"], textarea');
+    inputs.forEach(input => {
+        const originalPlaceholder = input.placeholder;
+        input.addEventListener('focus', () => {
+            if (originalPlaceholder) {
+                input.placeholder = '';
+                let i = 0;
+                const typingEffect = setInterval(() => {
+                    input.placeholder += originalPlaceholder[i];
+                    i++;
+                    if (i >= originalPlaceholder.length) {
+                        clearInterval(typingEffect);
+                    }
+                }, 50);
+            }
+        });
+        input.addEventListener('blur', () => {
+            input.placeholder = originalPlaceholder;
+        });
+    });
 }

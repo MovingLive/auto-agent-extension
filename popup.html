@@ -2,39 +2,78 @@
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>AutoAgent</title>
+    <title>AutoAgent - AI Task Automation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="popup.css">
 </head>
-<body>
-    <div class="container">
-        <!-- Header simple -->
-        <div class="header">
+<body class="overflow-hidden">
+    <!-- Effet de particules animées -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-4 -left-4 w-72 h-72 bg-gradient-to-br from-cyan-400/20 to-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute -bottom-4 -right-4 w-96 h-96 bg-gradient-to-br from-purple-600/20 to-pink-500/20 rounded-full blur-3xl animate-pulse-delayed"></div>
+    </div>
+
+    <div class="container relative z-10">
+        <!-- Header futuriste -->
+        <div class="header group">
             <div class="header-top">
-                <h1 data-i18n="appTitle">🤖 AutoAgent</h1>
-                <div class="language-selector">
-                    <button type="button" class="language-btn" data-lang="fr">🇫🇷</button>
-                    <button type="button" class="language-btn" data-lang="en">🇬🇧</button>
+                <h1 data-i18n="appTitle" class="flex items-center gap-3">
+                    <span class="text-3xl animate-pulse">🤖</span>
+                    <span class="bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent font-bold text-2xl tracking-wide">
+                        AutoAgent
+                    </span>
+                    <span class="px-2 py-1 bg-gradient-to-r from-cyan-500/20 to-purple-600/20 rounded-full text-xs font-mono text-cyan-400 border border-cyan-500/30">
+                        AI
+                    </span>
+                </h1>
+                <div class="language-selector-compact">
+                    <button type="button" class="language-btn-compact" data-lang="fr" title="Français">🇫🇷</button>
+                    <button type="button" class="language-btn-compact" data-lang="en" title="English">🇬🇧</button>
                 </div>
             </div>
-            <div class="stats">
-                <span id="activeTasksCount" data-i18n="noActiveTasks">Aucune tâche active</span>
+            <div class="stats relative">
+                <div class="absolute left-3 top-1/2 transform -translate-y-1/2 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span id="activeTasksCount" data-i18n="noActiveTasks" class="ml-6 font-mono">Aucune tâche active</span>
+                <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-cyan-400 font-mono">
+                    ONLINE
+                </div>
             </div>
         </div>
 
-        <!-- Section création -->
-        <div class="create-section">
-            <h2 id="sectionTitle" data-i18n="newTask">➕ Nouvelle tâche</h2>
-            <div class="input-group">
-                <label data-i18n="taskName">Nom de la tâche</label>
-                <input type="text" id="taskName" data-i18n="taskNamePlaceholder" placeholder="Ex: Vérification quotidienne des actualités">
+        <!-- Section création moderne -->
+        <div class="create-section group">
+            <!-- Indicateur de section -->
+            <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-50"></div>
+
+            <div class="flex items-center gap-3 mb-6">
+                <h2 id="sectionTitle" data-i18n="newTask" class="font-semibold text-xl tracking-wide">Nouvelle tâche</h2>
+                <div class="flex-1 h-px bg-gradient-to-r from-cyan-400/50 to-transparent"></div>
             </div>
 
+            <!-- Input nom de tâche -->
+            <div class="input-group">
+                <label data-i18n="taskName" class="flex items-center gap-2 mb-2">
+                    <span class="icon-unicode text-cyan-400">📄</span>
+                    <span>Nom de la tâche</span>
+                </label>
+                <div class="relative">
+                    <input type="text" id="taskName" data-i18n="taskNamePlaceholder" 
+                           placeholder="Ex: Vérification quotidienne des actualités"
+                           class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300 backdrop-blur-sm">
+                </div>
+            </div>
+
+            <!-- Fréquence moderne -->
             <div class="schedule-group">
-                <label data-i18n="frequency">Fréquence</label>
-                <div class="schedule-inputs">
-                    <span data-i18n="frequencyEvery">Toutes les</span>
-                    <input type="number" id="intervalValue" min="1" max="999" value="30">
-                    <select id="timeUnit">
+                <label data-i18n="frequency" class="flex items-center gap-2 mb-2">
+                    <span class="icon-unicode text-purple-400">⏰</span>
+                    <span>Fréquence</span>
+                </label>
+                <div class="schedule-inputs-compact flex items-center gap-2 p-3 bg-white/5 border border-white/10 rounded-xl backdrop-blur-sm">
+                    <span data-i18n="frequencyEvery" class="text-sm text-gray-400 whitespace-nowrap">Toutes les</span>
+                    <input type="number" id="intervalValue" min="1" max="999" value="30"
+                           class="w-16 px-2 py-1 bg-white/5 border border-white/10 rounded-md text-center text-base font-bold text-cyan-400 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/20 transition-all duration-300">
+                    <select id="timeUnit" class="px-2 py-1 bg-white/5 border border-white/10 rounded-md text-white text-sm focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/20 transition-all duration-300 cursor-pointer">
                         <option value="minutes" data-i18n="minutes">minutes</option>
                         <option value="hours" data-i18n="hours">heures</option>
                         <option value="days" data-i18n="days">jours</option>
@@ -43,32 +82,58 @@
                 </div>
             </div>
 
+            <!-- Input prompt -->
             <div class="input-group">
-                <label data-i18n="prompt">Prompt</label>
-                <textarea id="promptText" data-i18n="promptPlaceholder" placeholder="Écrivez votre prompt ici..." rows="4"></textarea>
+                <label data-i18n="prompt" class="flex items-center gap-2 mb-2">
+                    <span class="icon-unicode text-green-400">💬</span>
+                    <span>Prompt</span>
+                </label>
+                <div class="relative">
+                    <textarea id="promptText" data-i18n="promptPlaceholder" 
+                              placeholder="Écrivez votre prompt ici..." rows="4"
+                              class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300 backdrop-blur-sm font-mono resize-none"></textarea>
+                </div>
             </div>
 
+            <!-- Boutons d'action -->
             <div class="action-buttons">
-                <button type="button" id="createTaskBtn" class="btn-primary" data-i18n="createTask">✅ Créer la tâche</button>
-                <button type="button" id="cancelEditBtn" class="btn-secondary" data-i18n="cancel" style="display: none;">❌ Annuler</button>
+                <button type="button" id="createTaskBtn" class="btn-primary group relative overflow-hidden" data-i18n="createTask">
+                    <span class="relative z-10 flex items-center justify-center gap-3">
+                        <span class="icon-unicode text-lg group-hover:rotate-180 transition-transform duration-500">➕</span>
+                        <span class="font-semibold tracking-wide">Créer la tâche</span>
+                    </span>
+                </button>
+                <button type="button" id="cancelEditBtn" class="btn-secondary group" data-i18n="cancel" style="display: none;">
+                    <span class="flex items-center justify-center gap-2">
+                        <span class="icon-unicode group-hover:rotate-90 transition-transform duration-300">❌</span>
+                        <span>Annuler</span>
+                    </span>
+                </button>
             </div>
         </div>
 
-        <!-- Séparateur -->
-        <div class="separator"></div>
-
-        <!-- Section gestion -->
-        <div class="manage-section">
-            <div class="section-header">
-                <h2 data-i18n="myTasks">📋 Mes tâches</h2>
-                <button type="button" id="refreshBtn" class="btn-icon" data-i18n-title="refreshTooltip" title="Actualiser">🔄</button>
+        <!-- Séparateur avec titre -->
+        <div class="separator relative">
+            <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-900 px-6 py-2">
+                <h2 data-i18n="myTasks" class="text-cyan-400 font-semibold text-lg tracking-wide">Mes tâches</h2>
             </div>
+        </div>
 
-            <div id="tasksList" class="tasks-list"></div>
+        <!-- Liste des tâches -->
+        <div class="manage-section">
+
+
+            <div id="tasksList" class="tasks-list space-y-4"></div>
 
             <div id="emptyState" class="empty-state" style="display: none;">
-                <p data-i18n="noTasks">🤖 Aucune tâche créée</p>
+                <div class="flex justify-center mb-4">
+                    <span class="icon-unicode text-6xl text-cyan-400/50">🤖</span>
+                </div>
+                <p data-i18n="noTasks" class="text-lg font-medium">Aucune tâche créée</p>
                 <p class="subtitle" data-i18n="noTasksSubtitle">Créez votre première tâche automatisée ci-dessus !</p>
+                <div class="mt-6 flex justify-center">
+                    <div class="w-16 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 rounded-full"></div>
+                </div>
             </div>
         </div>
 
@@ -76,6 +141,7 @@
         <div id="notifications" class="notifications"></div>
     </div>
 
+    <!-- Scripts -->
     <script src="i18n.js"></script>
     <script src="popup.js"></script>
 </body>

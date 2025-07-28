@@ -5,6 +5,7 @@ Extension Chrome pour automatiser l'exécution de prompts récurrents dans Perpl
 ## 🌍 **NOUVEAU : Support Multilingue**
 
 L'extension prend maintenant en charge **deux langues** :
+
 - 🇫🇷 **Français** (langue par défaut)
 - 🇬🇧 **Anglais**
 

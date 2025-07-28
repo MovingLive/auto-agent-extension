@@ -25,6 +25,7 @@ cp popup.css "$BUILD_DIR/"
 cp background.js "$BUILD_DIR/"
 cp content.js "$BUILD_DIR/"
 cp README.md "$BUILD_DIR/"
+cp i18n.js "$BUILD_DIR/"
 
 # Créer des icônes temporaires si elles n'existent pas
 if [ ! -f "icons/icon16.png" ]; then
@@ -102,7 +103,7 @@ fi
 
 # Vérifier l'intégrité des fichiers
 echo "🔍 Vérification de l'intégrité..."
-REQUIRED_FILES=("manifest.json" "popup.html" "popup.js" "background.js" "content.js" "popup.css")
+REQUIRED_FILES=("manifest.json" "popup.html" "popup.js" "background.js" "content.js" "popup.css" "i18n.js" "README.md" "VERSION" "install.sh")
 MISSING_FILES=()
 
 for file in "${REQUIRED_FILES[@]}"; do

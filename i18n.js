@@ -14,7 +14,7 @@ class I18n {
             noActiveTasks: 'Aucune tâche active',
             
             // Création de tâche
-            newTask: '➕ Nouvelle tâche',
+            newTask: 'Nouvelle tâche',
             editTask: '✏️ Modifier la tâche',
             taskName: 'Nom de la tâche',
             taskNamePlaceholder: 'Ex: Vérification quotidienne des actualités',
@@ -105,7 +105,7 @@ class I18n {
             noActiveTasks: 'No active tasks',
             
             // Création de tâche
-            newTask: '➕ New task',
+            newTask: 'New task',
             editTask: '✏️ Edit task',
             taskName: 'Task name',
             taskNamePlaceholder: 'Ex: Daily news check',
@@ -463,7 +463,7 @@ class I18n {
 
     // Mettre à jour l'état des boutons de langue
     updateLanguageButtons() {
-        document.querySelectorAll('.language-btn').forEach(btn => {
+        document.querySelectorAll('.language-btn, .language-btn-compact').forEach(btn => {
             const lang = btn.getAttribute('data-lang');
             if (lang === this.currentLanguage) {
                 btn.classList.add('active');
