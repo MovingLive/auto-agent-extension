@@ -147,10 +147,19 @@ svg {
 }
 
 .header-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  position: relative;
   margin-bottom: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.header-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .header h1 {
@@ -165,8 +174,33 @@ svg {
   gap: 12px;
 }
 
+.header-title {
+  background: linear-gradient(135deg, #00f5ff, #8b5cf6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  font-size: 28px;
+  letter-spacing: 0.025em;
+}
+
+.header-ai-badge {
+  padding: 4px 8px;
+  background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(139, 92, 246, 0.2));
+  border-radius: 20px;
+  font-size: 12px;
+  font-family: monospace;
+  color: #00f5ff;
+  border: 1px solid rgba(0, 245, 255, 0.3);
+}
+
+.header-robot {
+  font-size: 32px;
+  animation: pulse 2s infinite;
+}
+
 .header h1::before {
-  content: '🤖';
+  content: '';  /* Suppression du double emoji */
   font-size: 32px;
   animation: pulse 2s infinite;
 }
@@ -179,8 +213,8 @@ svg {
 /* === Sélecteur de langue compact === */
 .language-selector-compact {
     position: absolute;
-    top: 16px;
-    right: 16px;
+    top: 0;
+    right: 0;
     z-index: 50;
 }
 
@@ -603,6 +637,101 @@ svg {
   padding: 8px;
   font-size: 12px;
   color: var(--ai-primary);
+}
+
+/* En-tête de section avec indicateurs */
+.task-section-header {
+  background: var(--ai-bg-glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--ai-border);
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin: 24px 0;
+  position: relative;
+  overflow: hidden;
+  transition: var(--ai-transition);
+}
+
+.task-section-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ai-primary), transparent);
+}
+
+.task-section-header:hover {
+  border-color: var(--ai-border-hover);
+  box-shadow: var(--ai-shadow-glow);
+}
+
+/* Indicateurs de statut des tâches */
+.task-indicators {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.indicator-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  transition: var(--ai-transition);
+}
+
+.indicator-active {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.indicator-paused {
+  background: rgba(251, 146, 60, 0.1);
+  border: 1px solid rgba(251, 146, 60, 0.3);
+}
+
+.indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.dot-active {
+  background: #10b981;
+  animation: pulse-dot 2s infinite;
+}
+
+.dot-paused {
+  background: #fb923c;
+}
+
+.indicator-count {
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.indicator-active .indicator-count {
+  color: #6ee7b7;
+}
+
+.indicator-paused .indicator-count {
+  color: #fcd34d;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { 
+    opacity: 1; 
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  50% { 
+    opacity: 0.7; 
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
 }
 
 /* Section de gestion moderne */

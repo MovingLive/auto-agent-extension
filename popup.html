@@ -17,25 +17,18 @@
         <!-- Header futuriste -->
         <div class="header group">
             <div class="header-top">
-                <h1 data-i18n="appTitle" class="flex items-center gap-3">
-                    <span class="text-3xl animate-pulse">🤖</span>
-                    <span class="bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent font-bold text-2xl tracking-wide">
-                        AutoAgent
-                    </span>
-                    <span class="px-2 py-1 bg-gradient-to-r from-cyan-500/20 to-purple-600/20 rounded-full text-xs font-mono text-cyan-400 border border-cyan-500/30">
-                        AI
-                    </span>
-                </h1>
+                <!-- Titre centré -->
+                <div class="header-center">
+                    <h1 data-i18n="appTitle">
+                        <span class="header-robot">🤖</span>
+                        <span class="header-title">AutoAgent</span>
+                        <span class="header-ai-badge">AI</span>
+                    </h1>
+                </div>
+                <!-- Boutons de langue positionnés absolument -->
                 <div class="language-selector-compact">
                     <button type="button" class="language-btn-compact" data-lang="fr" title="Français">🇫🇷</button>
                     <button type="button" class="language-btn-compact" data-lang="en" title="English">🇬🇧</button>
-                </div>
-            </div>
-            <div class="stats relative">
-                <div class="absolute left-3 top-1/2 transform -translate-y-1/2 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                <span id="activeTasksCount" data-i18n="noActiveTasks" class="ml-6 font-mono">Aucune tâche active</span>
-                <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-cyan-400 font-mono">
-                    ONLINE
                 </div>
             </div>
         </div>
@@ -112,10 +105,23 @@
             </div>
         </div>
 
-        <!-- Séparateur avec titre -->
-        <div class="separator relative">
-            <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-900 px-6 py-2">
-                <h2 data-i18n="myTasks" class="text-cyan-400 font-semibold text-lg tracking-wide">Mes tâches</h2>
+        <!-- Titre de section avec indicateurs -->
+        <div class="task-section-header">
+            <div class="flex items-center justify-between w-full">
+                <h2 data-i18n="myTasks" class="text-cyan-400 font-semibold text-xl tracking-wide flex items-center gap-3">
+                    <span class="text-xl">📋</span>
+                    <span>Mes tâches</span>
+                </h2>
+                <div id="taskStatusIndicators" class="task-indicators">
+                    <div class="indicator-badge indicator-active">
+                        <div class="indicator-dot dot-active"></div>
+                        <span id="activeCount" class="indicator-count">0</span>
+                    </div>
+                    <div class="indicator-badge indicator-paused">
+                        <div class="indicator-dot dot-paused"></div>
+                        <span id="pausedCount" class="indicator-count">0</span>
+                    </div>
+                </div>
             </div>
         </div>
 

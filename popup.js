@@ -428,12 +428,18 @@ function updateTaskCount() {
     chrome.storage.local.get(['cronTasks'], (result) => {
         const tasks = result.cronTasks || [];
         const activeTasks = tasks.filter(task => task.isActive).length;
-        const countElement = document.getElementById('activeTasksCount');
+        const pausedTasks = tasks.filter(task => !task.isActive).length;
         
-        if (activeTasks === 0) {
-            countElement.textContent = window.i18n.t('noActiveTasks');
-        } else {
-            countElement.textContent = window.i18n.t('activeTasksCount', { count: activeTasks });
+        // Mettre à jour les indicateurs dans le titre
+        const activeCountElement = document.getElementById('activeCount');
+        const pausedCountElement = document.getElementById('pausedCount');
+        
+        if (activeCountElement) {
+            activeCountElement.textContent = activeTasks;
+        }
+        
+        if (pausedCountElement) {
+            pausedCountElement.textContent = pausedTasks;
         }
     });
 }
