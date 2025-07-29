@@ -5,7 +5,11 @@
   "main": "background.js",
   "scripts": {
     "build": "echo 'Extension prête pour le chargement manuel'",
-    "test": "echo 'Tests non configurés'",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report",
     "lint": "echo 'Linting non configuré'"
   },
   "keywords": [
@@ -20,15 +24,20 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/votre-username/autoagent"
+    "url": "git+https://github.com/votre-username/autoagent.git"
   },
   "bugs": {
     "url": "https://github.com/votre-username/autoagent/issues"
   },
   "homepage": "https://github.com/votre-username/autoagent#readme",
-  "devDependencies": {},
-  "dependencies": {},
+  "devDependencies": {
+    "@playwright/test": "^1.54.1",
+    "@types/node": "^24.1.0"
+  },
   "engines": {
     "node": ">=14.0.0"
+  },
+  "directories": {
+    "test": "tests"
   }
 }

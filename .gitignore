@@ -1,3 +1,6 @@
 auto-agent-extension
 auto-agent-extension-v1.0.0.zip
 .DS_Store
+node_modules
+test-results
+playwright-report
