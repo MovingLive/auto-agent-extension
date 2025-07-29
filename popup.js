@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupVisualEffects();
     loadTasks();
     updateTaskCount();
+    
+    // Initialiser la planification sur "hours"
+    selectScheduleUnit('hours');
 });
 
 // Configuration des écouteurs d'événements
@@ -31,6 +34,14 @@ function setupEventListeners() {
     const cancelBtn = document.getElementById('cancelEditBtn');
     cancelBtn.addEventListener('click', cancelEdit);
     
+    // Gestion des boutons d'unité de planification
+    const unitButtons = document.querySelectorAll('.unit-btn-compact');
+    unitButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const unit = btn.getAttribute('data-unit');
+            selectScheduleUnit(unit);
+        });
+    });
     
     // Raccourci clavier pour créer une tâche
     document.addEventListener('keypress', (e) => {
@@ -46,6 +57,23 @@ function setupEventListeners() {
     });
 }
 
+// Sélectionner une unité de planification
+function selectScheduleUnit(unit) {
+    // Mettre à jour les boutons
+    document.querySelectorAll('.unit-btn-compact').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector(`[data-unit="${unit}"]`).classList.add('active');
+    
+    // Afficher la configuration correspondante
+    document.querySelectorAll('.schedule-config').forEach(config => {
+        config.classList.remove('active');
+    });
+    
+    const configId = unit + 'Config';
+    document.getElementById(configId).classList.add('active');
+}
+
 // Gérer la création ou mise à jour d'une tâche
 function handleCreateOrUpdate() {
     if (editingTaskId) {
@@ -59,8 +87,6 @@ function handleCreateOrUpdate() {
 function createTask() {
     const taskName = document.getElementById('taskName').value.trim();
     const promptText = document.getElementById('promptText').value.trim();
-    const intervalValue = parseInt(document.getElementById('intervalValue').value);
-    const timeUnit = document.getElementById('timeUnit').value;
     
     // Validation
     if (!taskName) {
@@ -73,31 +99,41 @@ function createTask() {
         return;
     }
     
-    if (!intervalValue || intervalValue < 1) {
-        showNotification(window.i18n.t('pleaseEnterInterval'), 'error');
-        return;
-    }
-    
-    // Calcul de l'intervalle en minutes
+    // Récupération des données de planification
+    const activeUnit = document.querySelector('.unit-btn-compact.active').getAttribute('data-unit');
     let intervalInMinutes;
     let description;
+    let schedulingData = { type: activeUnit };
     
-    switch(timeUnit) {
-        case 'minutes':
-            intervalInMinutes = intervalValue;
-            description = window.i18n.getFrequencyDescription(intervalValue, 'minutes');
-            break;
+    switch(activeUnit) {
         case 'hours':
-            intervalInMinutes = intervalValue * 60;
-            description = window.i18n.getFrequencyDescription(intervalValue, 'hours');
+            const hourMinutes = parseInt(document.getElementById('hourMinutes').value) || 0;
+            intervalInMinutes = 60; // Toutes les heures
+            schedulingData.minutes = hourMinutes;
+            description = `Toutes les heures à ${hourMinutes} minutes`;
             break;
+            
         case 'days':
-            intervalInMinutes = intervalValue * 24 * 60;
-            description = window.i18n.getFrequencyDescription(intervalValue, 'days');
+            const dayHours = parseInt(document.getElementById('dayHours').value) || 9;
+            const dayMinutes = parseInt(document.getElementById('dayMinutes').value) || 0;
+            intervalInMinutes = 24 * 60; // Tous les jours
+            schedulingData.hours = dayHours;
+            schedulingData.minutes = dayMinutes;
+            description = `Tous les jours à ${dayHours.toString().padStart(2, '0')}:${dayMinutes.toString().padStart(2, '0')}`;
             break;
+            
         case 'weeks':
-            intervalInMinutes = intervalValue * 7 * 24 * 60;
-            description = window.i18n.getFrequencyDescription(intervalValue, 'weeks');
+            const weekDay = parseInt(document.getElementById('weekDay').value);
+            const weekHours = parseInt(document.getElementById('weekHours').value) || 9;
+            const weekMinutes = parseInt(document.getElementById('weekMinutes').value) || 0;
+            intervalInMinutes = 7 * 24 * 60; // Toutes les semaines
+            schedulingData.day = weekDay;
+            schedulingData.hours = weekHours;
+            schedulingData.minutes = weekMinutes;
+            
+            const dayNames = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+            const dayName = dayNames[weekDay];
+            description = `Chaque ${dayName} à ${weekHours.toString().padStart(2, '0')}:${weekMinutes.toString().padStart(2, '0')}`;
             break;
     }
     
@@ -108,7 +144,9 @@ function createTask() {
         prompt: promptText,
         intervalInMinutes: intervalInMinutes,
         description: description,
+        schedulingData: schedulingData,
         createdAt: new Date().toISOString(),
+        lastRun: null,
         lastRun: null,
         isActive: true
     };
@@ -141,8 +179,17 @@ function createTask() {
 function resetForm() {
     document.getElementById('taskName').value = '';
     document.getElementById('promptText').value = '';
-    document.getElementById('intervalValue').value = '30';
-    document.getElementById('timeUnit').value = 'minutes';
+    
+    // Réinitialiser les valeurs de planification
+    document.getElementById('hourMinutes').value = '0';
+    document.getElementById('dayHours').value = '9';
+    document.getElementById('dayMinutes').value = '0';
+    document.getElementById('weekDay').value = '1';
+    document.getElementById('weekHours').value = '9';
+    document.getElementById('weekMinutes').value = '0';
+    
+    // Remettre l'unité par défaut sur "hours"
+    selectScheduleUnit('hours');
     
     // Remettre en mode création
     editingTaskId = null;
@@ -162,30 +209,49 @@ function editTask(taskId) {
     document.getElementById('taskName').value = task.name;
     document.getElementById('promptText').value = task.prompt;
     
-    // Calculer les valeurs d'intervalle à partir des minutes
-    let intervalValue, timeUnit;
-    const minutes = task.intervalInMinutes;
-    
-    if (minutes % (7 * 24 * 60) === 0) {
-        intervalValue = minutes / (7 * 24 * 60);
-        timeUnit = 'weeks';
-    } else if (minutes % (24 * 60) === 0) {
-        intervalValue = minutes / (24 * 60);
-        timeUnit = 'days';
-    } else if (minutes % 60 === 0) {
-        intervalValue = minutes / 60;
-        timeUnit = 'hours';
+    // Restaurer les données de planification
+    if (task.schedulingData && task.schedulingData.type) {
+        const unit = task.schedulingData.type;
+        selectScheduleUnit(unit);
+        
+        switch(unit) {
+            case 'hours':
+                if (task.schedulingData.minutes !== undefined) {
+                    document.getElementById('hourMinutes').value = task.schedulingData.minutes;
+                }
+                break;
+            case 'days':
+                if (task.schedulingData.hours !== undefined) {
+                    document.getElementById('dayHours').value = task.schedulingData.hours;
+                }
+                if (task.schedulingData.minutes !== undefined) {
+                    document.getElementById('dayMinutes').value = task.schedulingData.minutes;
+                }
+                break;
+            case 'weeks':
+                if (task.schedulingData.day !== undefined) {
+                    document.getElementById('weekDay').value = task.schedulingData.day.toString();
+                }
+                if (task.schedulingData.hours !== undefined) {
+                    document.getElementById('weekHours').value = task.schedulingData.hours;
+                }
+                if (task.schedulingData.minutes !== undefined) {
+                    document.getElementById('weekMinutes').value = task.schedulingData.minutes;
+                }
+                break;
+        }
     } else {
-        intervalValue = minutes;
-        timeUnit = 'minutes';
+        // Par défaut, mode heures
+        selectScheduleUnit('hours');
     }
-    
-    document.getElementById('intervalValue').value = intervalValue;
-    document.getElementById('timeUnit').value = timeUnit;
     
     // Passer en mode édition
     editingTaskId = taskId;
     document.getElementById('sectionTitle').setAttribute('data-i18n', 'editTask');
+    document.getElementById('sectionTitle').textContent = window.i18n.t('editTask');
+    document.getElementById('createTaskBtn').setAttribute('data-i18n', 'updateTask');
+    document.getElementById('createTaskBtn').textContent = window.i18n.t('updateTask');
+    document.getElementById('cancelEditBtn').style.display = 'inline-block';
     document.getElementById('sectionTitle').textContent = window.i18n.t('editTask');
     document.getElementById('createTaskBtn').setAttribute('data-i18n', 'updateTask');
     document.getElementById('createTaskBtn').textContent = window.i18n.t('updateTask');
@@ -199,8 +265,6 @@ function editTask(taskId) {
 function updateTask() {
     const taskName = document.getElementById('taskName').value.trim();
     const promptText = document.getElementById('promptText').value.trim();
-    const intervalValue = parseInt(document.getElementById('intervalValue').value);
-    const timeUnit = document.getElementById('timeUnit').value;
     
     // Validation
     if (!taskName) {
@@ -213,31 +277,41 @@ function updateTask() {
         return;
     }
     
-    if (!intervalValue || intervalValue < 1) {
-        showNotification(window.i18n.t('pleaseEnterInterval'), 'error');
-        return;
-    }
-    
-    // Calcul de l'intervalle en minutes
+    // Récupération des données de planification
+    const activeUnit = document.querySelector('.unit-btn-compact.active').getAttribute('data-unit');
     let intervalInMinutes;
     let description;
+    let schedulingData = { type: activeUnit };
     
-    switch(timeUnit) {
-        case 'minutes':
-            intervalInMinutes = intervalValue;
-            description = window.i18n.getFrequencyDescription(intervalValue, 'minutes');
-            break;
+    switch(activeUnit) {
         case 'hours':
-            intervalInMinutes = intervalValue * 60;
-            description = window.i18n.getFrequencyDescription(intervalValue, 'hours');
+            const hourMinutes = parseInt(document.getElementById('hourMinutes').value) || 0;
+            intervalInMinutes = 60; // Toutes les heures
+            schedulingData.minutes = hourMinutes;
+            description = `Toutes les heures à ${hourMinutes} minutes`;
             break;
+            
         case 'days':
-            intervalInMinutes = intervalValue * 24 * 60;
-            description = window.i18n.getFrequencyDescription(intervalValue, 'days');
+            const dayHours = parseInt(document.getElementById('dayHours').value) || 9;
+            const dayMinutes = parseInt(document.getElementById('dayMinutes').value) || 0;
+            intervalInMinutes = 24 * 60; // Tous les jours
+            schedulingData.hours = dayHours;
+            schedulingData.minutes = dayMinutes;
+            description = `Tous les jours à ${dayHours.toString().padStart(2, '0')}:${dayMinutes.toString().padStart(2, '0')}`;
             break;
+            
         case 'weeks':
-            intervalInMinutes = intervalValue * 7 * 24 * 60;
-            description = window.i18n.getFrequencyDescription(intervalValue, 'weeks');
+            const weekDay = parseInt(document.getElementById('weekDay').value);
+            const weekHours = parseInt(document.getElementById('weekHours').value) || 9;
+            const weekMinutes = parseInt(document.getElementById('weekMinutes').value) || 0;
+            intervalInMinutes = 7 * 24 * 60; // Toutes les semaines
+            schedulingData.day = weekDay;
+            schedulingData.hours = weekHours;
+            schedulingData.minutes = weekMinutes;
+            
+            const dayNames = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+            const dayName = dayNames[weekDay];
+            description = `Chaque ${dayName} à ${weekHours.toString().padStart(2, '0')}:${weekMinutes.toString().padStart(2, '0')}`;
             break;
     }
     
@@ -253,7 +327,8 @@ function updateTask() {
             name: taskName,
             prompt: promptText,
             intervalInMinutes: intervalInMinutes,
-            description: description
+            description: description,
+            schedulingData: schedulingData
         };
         
         chrome.storage.local.set({ cronTasks: tasks }, () => {

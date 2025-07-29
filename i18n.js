@@ -33,6 +33,32 @@ class I18n {
             day: 'jour',
             week: 'semaine',
             
+            // Jours de la semaine
+            monday: 'Lundi',
+            tuesday: 'Mardi',
+            wednesday: 'Mercredi',
+            thursday: 'Jeudi',
+            friday: 'Vendredi',
+            saturday: 'Samedi',
+            sunday: 'Dimanche',
+            
+            // Planification avancée
+            dailyExecutionTime: 'Heure d\'exécution',
+            weeklyExecutionDay: 'Jour et heure d\'exécution',
+            timezoneBrowser: 'Heure locale',
+            at: 'à',
+            
+            // Nouvelle planification
+            hourlyExecution: 'Exécution toutes les heures',
+            dailyExecution: 'Exécution quotidienne',
+            weeklyExecution: 'Exécution hebdomadaire',
+            minutesOfHour: 'minutes de chaque heure',
+            minutesShort: 'min',
+            every: 'Chaque',
+            hourlyHint: 'Exemple: à 15 minutes de chaque heure (13:15, 14:15, 15:15...)',
+            dailyHint: 'Exemple: tous les jours à 09:00',
+            weeklyHint: 'Exemple: chaque lundi à 09:00',
+            
             // Boutons
             createTask: '✅ Créer la tâche',
             updateTask: '✅ Modifier la tâche',
@@ -123,6 +149,32 @@ class I18n {
             hour: 'hour',
             day: 'day',
             week: 'week',
+            
+            // Jours de la semaine
+            monday: 'Monday',
+            tuesday: 'Tuesday',
+            wednesday: 'Wednesday',
+            thursday: 'Thursday',
+            friday: 'Friday',
+            saturday: 'Saturday',
+            sunday: 'Sunday',
+            
+            // Planification avancée
+            dailyExecutionTime: 'Execution time',
+            weeklyExecutionDay: 'Day and time of execution',
+            timezoneBrowser: 'Local time',
+            at: 'at',
+            
+            // Nouvelle planification
+            hourlyExecution: 'Hourly execution',
+            dailyExecution: 'Daily execution',
+            weeklyExecution: 'Weekly execution',
+            minutesOfHour: 'minutes of each hour',
+            minutesShort: 'min',
+            every: 'Every',
+            hourlyHint: 'Example: at 15 minutes of each hour (13:15, 14:15, 15:15...)',
+            dailyHint: 'Example: every day at 09:00',
+            weeklyHint: 'Example: every Monday at 09:00',
             
             // Boutons
             createTask: '✅ Create task',

@@ -4,6 +4,8 @@
 
 Cette extension Chrome automatise l'exécution de prompts récurrents dans Perplexity Comet. Elle s'appuie sur quatre scripts principaux : `background.js` (gestion des alarmes et tâches), `content.js` (injection et interaction avec Comet), `popup.js`/`popup.html` (UI de gestion des tâches), et `manifest.json` (configuration de l'extension).
 
+Apres chaque changement visuel, utilise le MCP Playwright pour confirmer que les changements ont été correctement implémentés et que les fonctionnalités fonctionnent comme prévues.
+
 ## Consigne
 
 ne modifie rien dans le repertoire `./auto-agent-extension` c'est un dossier généré pour créer l'extension Chrome.

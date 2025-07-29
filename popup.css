@@ -269,6 +269,304 @@ svg {
     flex-shrink: 0;
 }
 
+/* === Nouveau sélecteur d'unité === */
+.schedule-unit-selector {
+    margin-bottom: 16px;
+}
+
+.unit-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: var(--ai-text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    min-width: 120px;
+    justify-content: center;
+}
+
+.unit-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(0, 245, 255, 0.3);
+    color: var(--ai-text-primary);
+    transform: translateY(-1px);
+}
+
+.unit-btn.active {
+    background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(139, 92, 246, 0.2));
+    border-color: var(--ai-primary);
+    color: var(--ai-primary);
+    box-shadow: 0 4px 20px rgba(0, 245, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.unit-btn .icon-unicode {
+    font-size: 1.1em;
+    transition: transform 0.3s ease;
+}
+
+.unit-btn:hover .icon-unicode,
+.unit-btn.active .icon-unicode {
+    transform: scale(1.1);
+}
+
+/* === Version compacte des boutons d'unité === */
+.unit-btn-compact {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: var(--ai-text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 0.9em;
+    min-width: 90px;
+    justify-content: center;
+}
+
+.unit-btn-compact:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(0, 245, 255, 0.3);
+    color: var(--ai-text-primary);
+    transform: translateY(-1px);
+}
+
+.unit-btn-compact.active {
+    background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(139, 92, 246, 0.2));
+    border-color: var(--ai-primary);
+    color: var(--ai-primary);
+    box-shadow: 0 2px 10px rgba(0, 245, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.unit-btn-compact .icon-unicode {
+    font-size: 1em;
+    transition: transform 0.3s ease;
+}
+
+.unit-btn-compact:hover .icon-unicode,
+.unit-btn-compact.active .icon-unicode {
+    transform: scale(1.05);
+}
+
+.schedule-unit-selector-inline {
+    margin-bottom: 12px;
+}
+
+.schedule-unit-selector-inline .flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
+
+/* === Configurations de planification === */
+.schedule-configurations {
+    position: relative;
+    min-height: 100px; /* Hauteur augmentée pour contenir les boutons ET les configurations */
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 16px;
+    backdrop-filter: blur(10px);
+}
+
+.schedule-config {
+    position: absolute;
+    top: 60px; /* Position à l'intérieur du conteneur, après les boutons */
+    left: 16px;
+    right: 16px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.schedule-config.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    /* Position absolue maintenue pour la cohérence visuelle */
+}
+
+.schedule-config-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    color: var(--ai-text-primary);
+    font-size: 14px;
+}
+
+.schedule-inputs-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+    margin-bottom: 8px;
+    white-space: nowrap;
+    font-size: 0.9em;
+}
+
+.time-input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 6px 10px;
+    color: white;
+    font-weight: 600;
+    text-align: center;
+    width: 50px;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+}
+
+.time-input:focus {
+    outline: none;
+    border-color: var(--ai-primary);
+    box-shadow: 0 0 0 2px rgba(0, 245, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.day-select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 6px 10px;
+    color: white;
+    min-width: 80px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.day-select:focus {
+    outline: none;
+    border-color: var(--ai-primary);
+    box-shadow: 0 0 0 2px rgba(0, 245, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.schedule-hint {
+    font-size: 12px;
+    color: var(--ai-text-muted);
+    font-style: italic;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+    border-left: 3px solid rgba(0, 245, 255, 0.3);
+}
+
+/* === Responsive === */
+@media (max-width: 400px) {
+    .schedule-unit-selector .flex {
+        flex-direction: column;
+    }
+    
+    .unit-btn {
+        min-width: 100%;
+    }
+    
+    .schedule-inputs-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+
+/* === Options de planification avancées === */
+.advanced-schedule-option {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 16px;
+    transition: all 0.3s ease;
+    animation: slideDown 0.3s ease-out;
+    position: relative;
+}
+
+.advanced-schedule-option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.3), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.advanced-schedule-option:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(0, 245, 255, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(0, 245, 255, 0.1);
+}
+
+.advanced-schedule-option:hover::before {
+    opacity: 1;
+}
+
+.advanced-schedule-option input[type="time"],
+.advanced-schedule-option select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: white;
+    transition: all 0.3s ease;
+    font-family: 'SF Mono', Monaco, monospace;
+}
+
+.advanced-schedule-option input[type="time"]:focus,
+.advanced-schedule-option select:focus {
+    border-color: var(--ai-primary);
+    box-shadow: 0 0 0 2px rgba(0, 245, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+    outline: none;
+}
+
+.advanced-schedule-option label {
+    color: var(--ai-primary) !important;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0.5px;
+}
+
+/* Animation d'apparition fluide */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 200px;
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+}
+
 /* === Icônes Unicode === */
 .icon-unicode {
     display: inline-block;

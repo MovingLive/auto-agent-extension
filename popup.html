@@ -62,16 +62,67 @@
                     <span class="icon-unicode text-purple-400">⏰</span>
                     <span>Fréquence</span>
                 </label>
-                <div class="schedule-inputs-compact flex items-center gap-2 p-3 bg-white/5 border border-white/10 rounded-xl backdrop-blur-sm">
-                    <span data-i18n="frequencyEvery" class="text-sm text-gray-400 whitespace-nowrap">Toutes les</span>
-                    <input type="number" id="intervalValue" min="1" max="999" value="30"
-                           class="w-16 px-2 py-1 bg-white/5 border border-white/10 rounded-md text-center text-base font-bold text-cyan-400 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/20 transition-all duration-300">
-                    <select id="timeUnit" class="px-2 py-1 bg-white/5 border border-white/10 rounded-md text-white text-sm focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/20 transition-all duration-300 cursor-pointer">
-                        <option value="minutes" data-i18n="minutes">minutes</option>
-                        <option value="hours" data-i18n="hours">heures</option>
-                        <option value="days" data-i18n="days">jours</option>
-                        <option value="weeks" data-i18n="weeks">semaines</option>
-                    </select>
+
+                <!-- Configurations de planification -->
+                <div class="schedule-configurations">
+                    <!-- Sélecteur d'unité intégré -->
+                    <div class="schedule-unit-selector-inline mb-3">
+                        <div class="flex gap-2">
+                            <button type="button" class="unit-btn-compact active" data-unit="hours" data-i18n="hours">
+                                <span class="icon-unicode">⏱️</span>
+                                <span>Heures</span>
+                            </button>
+                            <button type="button" class="unit-btn-compact" data-unit="days" data-i18n="days">
+                                <span class="icon-unicode">📅</span>
+                                <span>Jours</span>
+                            </button>
+                            <button type="button" class="unit-btn-compact" data-unit="weeks" data-i18n="weeks">
+                                <span class="icon-unicode">📆</span>
+                                <span>Semaines</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Configuration Heures -->
+                    <div id="hoursConfig" class="schedule-config active">
+                        <div class="schedule-inputs-row">
+                            <span data-i18n="at">à</span>
+                            <input type="number" id="hourMinutes" min="0" max="59" value="0" class="time-input">
+                            <span data-i18n="minutesOfHour">minutes de chaque heure</span>
+                        </div>
+                    </div>
+
+                    <!-- Configuration Jours -->
+                    <div id="daysConfig" class="schedule-config">
+                        <div class="schedule-inputs-row">
+                            <span data-i18n="at">à</span>
+                            <input type="number" id="dayHours" min="0" max="23" value="9" class="time-input">
+                            <span>h</span>
+                            <input type="number" id="dayMinutes" min="0" max="59" value="0" class="time-input">
+                            <span data-i18n="minutesShort">min</span>
+                        </div>
+                    </div>
+
+                    <!-- Configuration Semaines -->
+                    <div id="weeksConfig" class="schedule-config">
+                        <div class="schedule-inputs-row">
+                            <span data-i18n="every">Chaque</span>
+                            <select id="weekDay" class="day-select">
+                                <option value="1" data-i18n="monday">Lundi</option>
+                                <option value="2" data-i18n="tuesday">Mardi</option>
+                                <option value="3" data-i18n="wednesday">Mercredi</option>
+                                <option value="4" data-i18n="thursday">Jeudi</option>
+                                <option value="5" data-i18n="friday">Vendredi</option>
+                                <option value="6" data-i18n="saturday">Samedi</option>
+                                <option value="0" data-i18n="sunday">Dimanche</option>
+                            </select>
+                            <span data-i18n="at">à</span>
+                            <input type="number" id="weekHours" min="0" max="23" value="9" class="time-input">
+                            <span>h</span>
+                            <input type="number" id="weekMinutes" min="0" max="59" value="0" class="time-input">
+                            <span data-i18n="minutesShort">min</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
