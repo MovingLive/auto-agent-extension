@@ -36,10 +36,7 @@
   "name": "AutoAgent For Comet",
   "permissions": [
     "storage",
-    "tabs",
-    "alarms",
-    "activeTab",
-    "scripting"
+    "alarms"
   ],
   "version": "1.0"
 }
