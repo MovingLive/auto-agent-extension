@@ -1,48 +1,70 @@
+
 # 🤖 Copilot Instructions for AutoAgent
 
 ## Vue d'ensemble
 
-Cette extension Chrome automatise l'exécution de prompts récurrents dans Perplexity Comet. Elle s'appuie sur quatre scripts principaux : `background.js` (gestion des alarmes et tâches), `content.js` (injection et interaction avec Comet), `popup.js`/`popup.html` (UI de gestion des tâches), et `manifest.json` (configuration de l'extension).
+AutoAgent est une extension Chrome qui automatise l’exécution de prompts récurrents dans Perplexity Comet.
+L’architecture est centrée sur le dossier `extension/` :
+- `background.js` : Service worker, planification (Chrome Alarms), persistance (chrome.storage), communication inter-scripts.
+- `content.js` : Injecté dans Comet, automatise la saisie/envoi de prompts. Les sélecteurs CSS sont critiques et doivent être centralisés ici.
+- `popup.html` + `popup.js` : UI de gestion des tâches, communique avec `background.js` via `chrome.runtime.sendMessage`.
+- `i18n.js` : Gestion multilingue.
+- `manifest.json` : Permissions, points d’entrée, configuration.
 
-Apres chaque changement visuel, utilise le MCP Playwright pour confirmer que les changements ont été correctement implémentés et que les fonctionnalités fonctionnent comme prévues.
+## Architecture & Patterns
 
-## Consigne
-
-ne modifie rien dans le repertoire `./auto-agent-extension` c'est un dossier généré pour créer l'extension Chrome.
-
-## Architecture & Flux
-- **background.js** : Service worker qui gère la planification (API Chrome Alarms), la persistance des tâches (API Storage), et la communication avec les autres scripts.
-- **content.js** : Injecté dans les pages Comet, il automatise la saisie et l'envoi des prompts. Les sélecteurs CSS sont adaptés à l'UI Comet : modifiez-les ici si l'interface change.
-- **popup.js / popup.html** : Interface utilisateur pour créer, visualiser, supprimer et actualiser les tâches. Communique avec `background.js` via `chrome.runtime`.
-- **manifest.json** : Définit les permissions (storage, tabs, alarms, activeTab, host_permissions) et les points d'entrée.
+- **Communication** : Toujours via `chrome.runtime.sendMessage` (pas de direct access entre scripts).
+- **Stockage** : Toutes les tâches sont persistées dans `chrome.storage` (jamais localStorage).
+- **Sélecteurs CSS** : Centralisés et commentés dans `content.js` pour faciliter la maintenance lors des évolutions de l’UI Comet.
+- **Tests** : Toute modification visuelle ou UX doit être validée par la suite Playwright (`tests/e2e/`), qui couvre : interface, planification, gestion des tâches, responsive, accessibilité, performance, layout, intégration, optimisation.
+- **Helpers de test** : Utiliser `tests/helpers/test-utils.js` pour la création de tâches, validation des modes, captures, etc.
 
 ## Workflows Développeur
-- **Build/Packaging** : Utilisez `build.sh` pour zipper l'extension (`auto-agent-extension-v1.0.0.zip`).
-- **Installation locale** : Chargez le dossier via `chrome://extensions/` en mode développeur.
-- **Debug** : Utilisez la console Chrome (`F12`) sur les pages Comet et dans l'inspecteur d'extension pour diagnostiquer les problèmes. Les logs sont principalement dans la console.
-- **Mise à jour** : Remplacez les fichiers, puis rechargez l'extension dans Chrome. Les tâches existantes sont préservées.
 
-## Conventions & Patterns
-- **Pas de framework** : Vanilla JS/HTML/CSS, pas de build complexe.
-- **Communication** : Utilisez `chrome.runtime.sendMessage` pour les échanges entre scripts.
-- **Stockage** : Toutes les tâches sont persistées via `chrome.storage`.
-- **Sélecteurs CSS** : Centralisez et commentez les sélecteurs dans `content.js` pour faciliter la maintenance.
-- **Pas de tests automatisés** : Les tests sont manuels via l'UI et la console.
+- **Build** : Les fichiers d’extension sont dans `extension/`. Le packaging se fait via le workflow GitHub Actions `.github/workflows/cd.yml` (zip + release GitHub, upload Chrome Web Store optionnel).
+- **Tests** :
+  - `npm install && npx playwright install` pour l’installation.
+  - `npm test` pour tous les tests, ou `./run-tests.sh` pour la suite complète avec reporting.
+  - Les tests génèrent des captures dans `test-results/` pour la régression visuelle.
+- **Debug** :
+  - Utiliser la console Chrome (`F12`) sur Comet ou l’inspecteur d’extension.
+  - Logs principalement dans la console.
+  - Pour les tests : `npm run test:debug` ou `npm run test:ui`.
 
-## Points d'intégration & dépendances
+## Conventions spécifiques
+
+- **Pas de code d’extension à la racine** : tout est dans `extension/`.
+- **Pas de localStorage** : toujours `chrome.storage`.
+- **Pas d’accès direct DOM entre scripts** : toujours via messaging.
+- **Sélecteurs CSS** : documentés et factorisés dans `content.js`.
+- **Versioning** : automatique via le workflow CI/CD.
+- **Tests** : toute nouvelle fonctionnalité ou correction doit être couverte par un test Playwright.
+
+- **Style** : Toute l’UI utilise Tailwind CSS (voir les classes utilitaires dans les fichiers HTML/JS). Privilégier les classes Tailwind pour toute nouvelle mise en forme ou adaptation responsive.
+
+## Intégration & Dépendances
+
 - **API Chrome** : alarms, storage, tabs, runtime, activeTab, host_permissions.
-- **Perplexity Comet** : L'extension dépend de l'UI Comet, sujette à changement.
+- **Perplexity Comet** : attention, l’UI peut changer, donc les sélecteurs doivent être maintenus à jour.
+- **Playwright** : utilisé pour la validation visuelle, la régression, la performance et l’accessibilité.
+
+- **Tailwind CSS** : utilisé pour tout le design et la responsivité de l’interface (voir `extension/popup.html`, `popup.js`).
 
 ## Exemples de fichiers clés
-- `background.js` : Planification et gestion des tâches
-- `content.js` : Injection et automatisation sur Comet
-- `popup.js` : Logique UI
-- `manifest.json` : Permissions et configuration
+
+- `extension/background.js` : Planification, gestion des tâches, communication.
+- `extension/content.js` : Injection, automatisation Comet, sélecteurs CSS.
+- `extension/popup.js` : Logique UI, gestion des interactions utilisateur.
+- `extension/manifest.json` : Permissions, configuration.
+- `tests/e2e/` : Scénarios Playwright couvrant tous les aspects critiques.
+- `tests/helpers/test-utils.js` : Fonctions utilitaires pour les tests.
 
 ## Limitations & précautions
-- L'extension ne fonctionne que si Chrome/Comet est ouvert.
-- Les sélecteurs CSS peuvent devenir obsolètes si l'UI Comet change.
-- Respectez les limites d'usage de Perplexity.
+
+- L’extension ne fonctionne que si Chrome/Comet est ouvert.
+- Les sélecteurs CSS peuvent devenir obsolètes si l’UI Comet évolue.
+- Respecter les limites d’usage de Perplexity.
+- Toujours valider les changements visuels par la suite Playwright.
 
 ---
 
