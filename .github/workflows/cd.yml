@@ -12,6 +12,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write # Autorise la création de release et le push de tags
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
