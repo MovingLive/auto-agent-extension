@@ -20,6 +20,8 @@ jobs:
         run: |
           echo "Aucune préparation nécessaire. Les fichiers sont déjà dans extension/."
 
+    permissions:
+      contents: write # Autorise la création de release et le push de tags
       - name: Bump manifest version
         id: version
         run: |
