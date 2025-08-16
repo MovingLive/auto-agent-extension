@@ -9,7 +9,7 @@ test.describe('AutoAgent - Interface de base', () => {
   
   test.beforeEach(async ({ page }) => {
     // Naviguer vers l'extension popup avec le chemin absolu
-    await page.goto('file://' + __dirname + '/../../popup.html');
+  await page.goto('file://' + __dirname + '/../../extension/popup.html');
     
     // Attendre que la page soit complètement chargée
     await page.waitForLoadState('networkidle');

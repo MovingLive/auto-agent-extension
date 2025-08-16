@@ -10,7 +10,7 @@ test.describe('AutoAgent - Performance & Stabilité', () => {
   test('should load within acceptable time', async ({ page }) => {
     const startTime = Date.now();
     
-    await page.goto('file://' + __dirname + '/../../popup.html');
+  await page.goto('file://' + __dirname + '/../../extension/popup.html');
     await page.waitForLoadState('networkidle');
     
     const loadTime = Date.now() - startTime;
@@ -22,7 +22,7 @@ test.describe('AutoAgent - Performance & Stabilité', () => {
   });
 
   test('should handle rapid mode switching', async ({ page }) => {
-    await page.goto('file://' + __dirname + '/../../popup.html');
+  await page.goto('file://' + __dirname + '/../../extension/popup.html');
     await page.waitForLoadState('networkidle');
     
     // Changer de mode rapidement plusieurs fois
@@ -43,7 +43,7 @@ test.describe('AutoAgent - Performance & Stabilité', () => {
   });
 
   test('should handle multiple rapid clicks on create button', async ({ page }) => {
-    await page.goto('file://' + __dirname + '/../../popup.html');
+  await page.goto('file://' + __dirname + '/../../extension/popup.html');
     await page.waitForLoadState('networkidle');
     
     // Remplir le formulaire
@@ -67,7 +67,7 @@ test.describe('AutoAgent - Performance & Stabilité', () => {
   });
 
   test('should handle page reload gracefully', async ({ page }) => {
-    await page.goto('file://' + __dirname + '/../../popup.html');
+  await page.goto('file://' + __dirname + '/../../extension/popup.html');
     await page.waitForLoadState('networkidle');
     
     // Remplir quelques champs
@@ -93,7 +93,7 @@ test.describe('AutoAgent - Performance & Stabilité', () => {
   });
 
   test('should handle browser back/forward navigation', async ({ page }) => {
-    await page.goto('file://' + __dirname + '/../../popup.html');
+  await page.goto('file://' + __dirname + '/../../extension/popup.html');
     await page.waitForLoadState('networkidle');
     
     // Naviguer vers une autre page puis revenir
@@ -109,7 +109,7 @@ test.describe('AutoAgent - Performance & Stabilité', () => {
   });
 
   test('should maintain performance with many interactions', async ({ page }) => {
-    await page.goto('file://' + __dirname + '/../../popup.html');
+  await page.goto('file://' + __dirname + '/../../extension/popup.html');
     await page.waitForLoadState('networkidle');
     
     const startTime = Date.now();
@@ -156,7 +156,7 @@ test.describe('AutoAgent - Performance & Stabilité', () => {
   });
 
   test('should handle invalid input gracefully', async ({ page }) => {
-    await page.goto('file://' + __dirname + '/../../popup.html');
+  await page.goto('file://' + __dirname + '/../../extension/popup.html');
     await page.waitForLoadState('networkidle');
     
     // Tester avec des entrées invalides
@@ -185,7 +185,7 @@ test.describe('AutoAgent - Performance & Stabilité', () => {
   });
 
   test('should measure and validate CSS performance', async ({ page }) => {
-    await page.goto('file://' + __dirname + '/../../popup.html');
+  await page.goto('file://' + __dirname + '/../../extension/popup.html');
     await page.waitForLoadState('networkidle');
     
     // Mesurer les métriques de performance CSS

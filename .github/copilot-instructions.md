@@ -66,6 +66,11 @@ L’architecture est centrée sur le dossier `extension/` :
 - Respecter les limites d’usage de Perplexity.
 - Toujours valider les changements visuels par la suite Playwright.
 
+## Contraintes
+
+- Apres chaque modifications visuelles, utiliser MCP Playwright pour valider que les changements sont biens corrects.
+- Documenter les changements dans les tests Playwright correspondants.
+
 ---
 
 Pour toute modification majeure, mettez à jour ce fichier pour guider les futurs agents IA.
