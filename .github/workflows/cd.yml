@@ -69,6 +69,7 @@ jobs:
           extensionId: ${{ secrets.EXTENSION_ID }}
           apiClientId: ${{ secrets.CHROME_CLIENT_ID }}
           apiClientSecret: ${{ secrets.CHROME_CLIENT_SECRET }}
+          apiRefreshToken: ${{ secrets.CHROME_REFRESH_TOKEN }}
           zipFilePath: auto-agent-extension.zip
 
       - name: Create GitHub Release
