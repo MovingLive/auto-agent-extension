@@ -12,6 +12,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write # Autorise la création de release et le push de tags
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -20,8 +23,6 @@ jobs:
         run: |
           echo "Aucune préparation nécessaire. Les fichiers sont déjà dans extension/."
 
-    permissions:
-      contents: write # Autorise la création de release et le push de tags
       - name: Bump manifest version
         id: version
         run: |
