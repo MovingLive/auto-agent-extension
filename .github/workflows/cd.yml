@@ -64,13 +64,11 @@ jobs:
           ls -la ../auto-agent-extension.zip
 
       - name: Upload to Chrome Web Store (optionnel)
-        if: false # Désactivé par défaut - activez quand vous aurez configuré les secrets
         uses: cardinalby/webext-buildtools-chrome-webstore-upload-action@v1
         with:
           extensionId: ${{ secrets.EXTENSION_ID }}
           apiClientId: ${{ secrets.CHROME_CLIENT_ID }}
           apiClientSecret: ${{ secrets.CHROME_CLIENT_SECRET }}
-          apiRefreshToken: ${{ secrets.CHROME_REFRESH_TOKEN }}
           zipFilePath: auto-agent-extension.zip
 
       - name: Create GitHub Release
