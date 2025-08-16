@@ -1,0 +1,91 @@
+name: Deploy Chrome Extension
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'extension/**'
+  workflow_dispatch: # Permet de déclencher manuellement
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Préparation (inutile)
+        run: |
+          echo "Aucune préparation nécessaire. Les fichiers sont déjà dans extension/."
+
+      - name: Bump manifest version
+        id: version
+        run: |
+          VERSION=$(jq -r '.version' extension/manifest.json)
+          echo "Current version: $VERSION"
+          
+          # Increment patch version (1.0 -> 1.1, 1.2.3 -> 1.2.4)
+          if [[ $VERSION =~ ^([0-9]+)\.([0-9]+)$ ]]; then
+            # Format x.y
+            MAJOR=$(echo $VERSION | cut -d. -f1)
+            MINOR=$(echo $VERSION | cut -d. -f2)
+            NEW_VERSION="$MAJOR.$((MINOR + 1))"
+          elif [[ $VERSION =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+            # Format x.y.z
+            MAJOR=$(echo $VERSION | cut -d. -f1)
+            MINOR=$(echo $VERSION | cut -d. -f2)
+            PATCH=$(echo $VERSION | cut -d. -f3)
+            NEW_VERSION="$MAJOR.$MINOR.$((PATCH + 1))"
+          else
+            echo "⚠️ Format de version non reconnu: $VERSION"
+            NEW_VERSION="$VERSION"
+          fi
+          
+          echo "Bumping to: $NEW_VERSION"
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          jq --arg v "$NEW_VERSION" '.version = $v' extension/manifest.json > tmp.$$.json && mv tmp.$$.json extension/manifest.json
+          
+          # Commit la nouvelle version
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          # Plus besoin de copier le manifest à la racine
+          # git add manifest.json
+          # git commit -m "🔖 Bump version to $NEW_VERSION" || echo "No changes to commit"
+
+      - name: Zip extension
+        run: |
+          cd extension && zip -r ../auto-agent-extension.zip . -x "*.DS_Store" "*/.*"
+          echo "📦 Extension zippée: auto-agent-extension.zip"
+          ls -la ../auto-agent-extension.zip
+
+      - name: Upload to Chrome Web Store (optionnel)
+        if: false # Désactivé par défaut - activez quand vous aurez configuré les secrets
+        uses: cardinalby/webext-buildtools-chrome-webstore-upload-action@v1
+        with:
+          extensionId: ${{ secrets.EXTENSION_ID }}
+          apiClientId: ${{ secrets.CHROME_CLIENT_ID }}
+          apiClientSecret: ${{ secrets.CHROME_CLIENT_SECRET }}
+          apiRefreshToken: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          zipFilePath: auto-agent-extension.zip
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.version.outputs.new_version }}
+          name: AutoAgent v${{ steps.version.outputs.new_version }}
+          body: |
+            🚀 Nouvelle version de l'extension AutoAgent
+            
+            ## Installation
+            1. Téléchargez le fichier ZIP ci-dessous
+            2. Ouvrez Chrome et allez dans `chrome://extensions/`
+            3. Activez le "Mode développeur"
+            4. Cliquez sur "Charger l'extension non empaquetée"
+            5. Sélectionnez le dossier extrait du ZIP
+            
+            Ou installez depuis le Chrome Web Store (si publié).
+          files: auto-agent-extension.zip
+          draft: false
+          prerelease: false

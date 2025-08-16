@@ -8,7 +8,7 @@ const { test, expect } = require('@playwright/test');
 test.describe('AutoAgent - Validation des optimisations', () => {
   
   test.beforeEach(async ({ page }) => {
-    await page.goto('file://' + __dirname + '/../../popup.html');
+  await page.goto('file://' + __dirname + '/../../extension/popup.html');
     await page.waitForLoadState('networkidle');
   });
 

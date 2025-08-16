@@ -10,7 +10,7 @@ test.describe('AutoAgent - Responsive & Accessibilité', () => {
   test('should display correctly on mobile viewport', async ({ page }) => {
     // Simuler un viewport mobile
     await page.setViewportSize({ width: 375, height: 667 }); // iPhone SE
-    await page.goto('file://' + __dirname + '/../../popup.html');
+  await page.goto('file://' + __dirname + '/../../extension/popup.html');
     await page.waitForLoadState('networkidle');
     
     // Vérifier que l'interface reste utilisable
@@ -35,7 +35,7 @@ test.describe('AutoAgent - Responsive & Accessibilité', () => {
   test('should display correctly on tablet viewport', async ({ page }) => {
     // Simuler un viewport tablette
     await page.setViewportSize({ width: 768, height: 1024 }); // iPad
-    await page.goto('file://' + __dirname + '/../../popup.html');
+  await page.goto('file://' + __dirname + '/../../extension/popup.html');
     await page.waitForLoadState('networkidle');
     
     // Vérifier l'affichage sur tablette
@@ -54,7 +54,7 @@ test.describe('AutoAgent - Responsive & Accessibilité', () => {
   });
 
   test('should have proper keyboard navigation', async ({ page }) => {
-    await page.goto('file://' + __dirname + '/../../popup.html');
+  await page.goto('file://' + __dirname + '/../../extension/popup.html');
     await page.waitForLoadState('networkidle');
     
     // Tester la navigation au clavier - cliquer d'abord sur le champ
@@ -73,7 +73,7 @@ test.describe('AutoAgent - Responsive & Accessibilité', () => {
   });
 
   test('should have accessible labels and ARIA attributes', async ({ page }) => {
-    await page.goto('file://' + __dirname + '/../../popup.html');
+  await page.goto('file://' + __dirname + '/../../extension/popup.html');
     await page.waitForLoadState('networkidle');
     
     // Vérifier les labels des champs
@@ -97,7 +97,7 @@ test.describe('AutoAgent - Responsive & Accessibilité', () => {
   });
 
   test('should handle high contrast mode', async ({ page }) => {
-    await page.goto('file://' + __dirname + '/../../popup.html');
+  await page.goto('file://' + __dirname + '/../../extension/popup.html');
     await page.waitForLoadState('networkidle');
     
     // Simuler un mode contraste élevé (via media query)
@@ -118,7 +118,7 @@ test.describe('AutoAgent - Responsive & Accessibilité', () => {
   });
 
   test('should maintain readability with zoom', async ({ page }) => {
-    await page.goto('file://' + __dirname + '/../../popup.html');
+  await page.goto('file://' + __dirname + '/../../extension/popup.html');
     await page.waitForLoadState('networkidle');
     
     // Simuler un zoom à 150%
@@ -144,7 +144,7 @@ test.describe('AutoAgent - Responsive & Accessibilité', () => {
     // Simuler une préférence pour les animations réduites
     await page.emulateMedia({ reducedMotion: 'reduce' });
     
-    await page.goto('file://' + __dirname + '/../../popup.html');
+  await page.goto('file://' + __dirname + '/../../extension/popup.html');
     await page.waitForLoadState('networkidle');
     
     // Tester les transitions entre modes

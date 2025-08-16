@@ -1,6 +1,15 @@
+# ZIPs de build
 auto-agent-extension
-auto-agent-extension-v1.0.0.zip
+auto-agent-extension-v*.zip
+
+# Fichiers système
 .DS_Store
+
+# Dépendances
 node_modules
+
+# Résultats de tests
 test-results
 playwright-report
+tests/test-results.json
+

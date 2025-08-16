@@ -7,7 +7,7 @@ const { test, expect } = require('@playwright/test');
 test.describe('Validation rapide', () => {
   
   test('should handle multilingual text patterns correctly', async ({ page }) => {
-    await page.goto('file://' + __dirname + '/../../popup.html');
+  await page.goto('file://' + __dirname + '/../../extension/popup.html');
     await page.waitForLoadState('networkidle');
     
     // Test 1: Vérifier le texte "minutes de chaque heure" ou "minutes of each hour"

@@ -8,7 +8,7 @@ async function globalSetup() {
   const fs = require('fs');
   const path = require('path');
   
-  const popupPath = path.resolve(__dirname, '../popup.html');
+  const popupPath = path.resolve(__dirname, '../extension/popup.html');
   if (!fs.existsSync(popupPath)) {
     throw new Error('popup.html non trouvé. Vérifiez que l\'extension est correctement configurée.');
   }
