@@ -154,6 +154,19 @@
                 </div>
             </div>
 
+            <!-- Option d'auto-exécution compacte -->
+            <div class="input-group">
+                <div class="auto-execute-option-compact">
+                    <input type="checkbox" id="autoExecuteCheckbox" checked class="auto-execute-checkbox-compact">
+                    <label for="autoExecuteCheckbox" class="auto-execute-label-compact">
+                        <span class="font-medium" data-i18n="autoExecute">Auto-exécution</span>
+                        <span class="auto-execute-description-compact" data-i18n="autoExecuteDescription">
+                            Lance automatiquement les tâches manquées dès l'ouverture du navigateur
+                        </span>
+                    </label>
+                </div>
+            </div>
+
             <!-- Boutons d'action -->
             <div class="action-buttons">
                 <button type="button" id="createTaskBtn" class="btn-primary group relative overflow-hidden" data-i18n="createTask">
@@ -217,7 +230,7 @@
 
         <!-- Notifications -->
         <div id="notifications" class="notifications"></div>
-        
+
         <!-- Indicateur de feedback discret -->
         <div class="feedback-indicator">
             <button type="button" id="feedbackBtn" class="feedback-btn" title="Donner votre avis ou signaler un problème" data-i18n-title="feedbackTooltip">

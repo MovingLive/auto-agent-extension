@@ -15,10 +15,38 @@ test.describe.skip('AutoAgent - Persistance des tâches manquées', () => {
     
     // Nettoyer le storage via localStorage (fallback)
     await page.evaluate(async () => {
-      if (typeof chrome !== 'undefined' && chrome.storage) {
+      // Simulation chrome.storage pour les tests
+      if (typeof chrome === 'undefined') {
+        window.chrome = {
+          storage: {
+            local: {
+              get: async (keys) => {
+                const result = {};
+                if (Array.isArray(keys)) {
+                  keys.forEach(key => {
+                    result[key] = JSON.parse(localStorage.getItem(key) || 'null');
+                  });
+                } else if (keys) {
+                  result[keys] = JSON.parse(localStorage.getItem(keys) || 'null');
+                }
+                return result;
+              },
+              set: async (items) => {
+                Object.keys(items).forEach(key => {
+                  localStorage.setItem(key, JSON.stringify(items[key]));
+                });
+              },
+              clear: async () => {
+                localStorage.clear();
+              }
+            }
+          }
+        };
+      }
+      
+      if (chrome.storage) {
         await chrome.storage.local.clear();
       } else {
-        // Fallback vers localStorage
         localStorage.clear();
       }
     });

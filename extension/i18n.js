@@ -126,6 +126,11 @@ class I18n {
       // Feedback
       feedbackTooltip: "Donner votre avis ou signaler un problème",
 
+      // Auto-exécution
+      autoExecute: "Auto-exécution",
+      autoExecuteDescription: "Lance automatiquement les tâches manquées dès l'ouverture du navigateur",
+      autoShort: "Auto",
+
       // Tooltips
       editTooltip: "Modifier",
       pauseTooltip: "Mettre en pause",
@@ -279,6 +284,11 @@ class I18n {
 
       // Feedback
       feedbackTooltip: "Give feedback or report an issue",
+
+      // Auto-execution
+      autoExecute: "Auto-execution",
+      autoExecuteDescription: "Automatically launch missed tasks when the browser opens",
+      autoShort: "Auto",
 
       // Tooltips
       editTooltip: "Edit",

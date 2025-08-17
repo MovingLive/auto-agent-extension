@@ -7,7 +7,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 });
 
 // Fonction pour exécuter une tâche
-async function executeTask(taskId) {
+async function executeTask(taskId, isAutoExecution = false) {
   try {
     // Récupérer la tâche depuis le storage
     const result = await chrome.storage.local.get(["cronTasks"]);
@@ -19,15 +19,15 @@ async function executeTask(taskId) {
       return;
     }
 
-    console.log("Exécution de la tâche:", task.name);
+    console.log(`Exécution de la tâche${isAutoExecution ? ' (auto-exécution)' : ''}:`, task.name);
 
     // Vérifier si un onglet Comet est ouvert
     const cometTabs = await chrome.tabs.query({
       url: ["*://www.perplexity.ai/*", "*://perplexity.ai/*"],
     });
 
-    if (cometTabs.length === 0) {
-      // Aucun onglet Comet ouvert, ajouter à la liste des tâches manquées
+    if (cometTabs.length === 0 && !isAutoExecution) {
+      // Aucun onglet Comet ouvert et ce n'est pas une auto-exécution, ajouter à la liste des tâches manquées
       await addMissedTask(task);
       console.log("Tâche ajoutée aux tâches manquées:", task.name);
       return;
@@ -40,7 +40,7 @@ async function executeTask(taskId) {
 
     const tab = await chrome.tabs.create({
       url: perplexityUrl,
-      active: false, // L'onglet sera créé en arrière-plan
+      active: isAutoExecution ? false : true, // En arrière-plan pour l'auto-exécution
     });
 
     console.log("Onglet créé avec ID:", tab.id, "URL:", perplexityUrl);
@@ -54,12 +54,14 @@ async function executeTask(taskId) {
     await chrome.storage.local.set({ cronTasks: updatedTasks });
   } catch (error) {
     console.error("Erreur lors de l'exécution de la tâche:", error);
-    // En cas d'erreur, ajouter aussi à la liste des tâches manquées
-    const result = await chrome.storage.local.get(["cronTasks"]);
-    const tasks = result.cronTasks || [];
-    const task = tasks.find((t) => t.id === taskId);
-    if (task) {
-      await addMissedTask(task);
+    // En cas d'erreur et si ce n'est pas une auto-exécution, ajouter aussi à la liste des tâches manquées
+    if (!isAutoExecution) {
+      const result = await chrome.storage.local.get(["cronTasks"]);
+      const tasks = result.cronTasks || [];
+      const task = tasks.find((t) => t.id === taskId);
+      if (task) {
+        await addMissedTask(task);
+      }
     }
   }
 }
@@ -122,6 +124,7 @@ async function checkMissedTasksOnStartup() {
     const tasks = result.cronTasks || [];
     const now = new Date();
     let missedCount = 0;
+    let autoExecutedCount = 0;
 
     for (const task of tasks) {
       if (!task.isActive) continue;
@@ -139,9 +142,24 @@ async function checkMissedTasksOnStartup() {
             task.name
           } (devait s'exécuter à ${nextRun.toLocaleString()})`
         );
-        await addMissedTask(task);
-        missedCount++;
+        
+        // Si l'auto-exécution est activée, exécuter directement la tâche
+        if (task.autoExecute !== false) {
+          console.log(`⚡ Auto-exécution de la tâche: ${task.name}`);
+          await executeTask(task.id, true); // true indique une auto-exécution
+          autoExecutedCount++;
+        } else {
+          // Sinon, ajouter aux tâches manquées
+          await addMissedTask(task);
+          missedCount++;
+        }
       }
+    }
+
+    if (autoExecutedCount > 0) {
+      console.log(
+        `⚡ ${autoExecutedCount} tâche(s) auto-exécutée(s) au démarrage`
+      );
     }
 
     if (missedCount > 0) {
@@ -391,8 +409,14 @@ setInterval(async () => {
           );
 
           if (!alreadyMissed) {
-            console.log(`⚠️ Ajout de la tâche manquée: ${task.name}`);
-            await addMissedTask(task);
+            // Si l'auto-exécution est activée, ne pas ajouter aux tâches manquées
+            // car elles seront auto-exécutées au prochain démarrage
+            if (task.autoExecute === false) {
+              console.log(`⚠️ Ajout de la tâche manquée: ${task.name}`);
+              await addMissedTask(task);
+            } else {
+              console.log(`⚡ Tâche en attente d'auto-exécution: ${task.name}`);
+            }
           }
         }
       }
