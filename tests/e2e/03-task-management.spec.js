@@ -129,19 +129,24 @@ test.describe('AutoAgent - Gestion des tâches', () => {
   });
 
   test('should show empty state when no tasks exist', async ({ page }) => {
-    // Vérifier que l'état vide n'est pas affiché initialement (car il y a du contenu)
-    const emptyState = page.locator('#emptyState');
+    // Attendre que la page soit complètement chargée
+    await page.waitForTimeout(1000);
     
-    // Si l'état vide est affiché, vérifier son contenu (compatibilité FR/EN)
+    // Vérifier que l'état vide est visible ou que les compteurs sont à 0
+    const emptyState = page.locator('#emptyState');
+    const activeCount = page.locator('#activeCount');
+    const pausedCount = page.locator('#pausedCount');
+    
+    // Vérifier que les compteurs sont à 0 (indicateur d'état vide)
+    await expect(activeCount).toContainText('0');
+    await expect(pausedCount).toContainText('0');
+    
+    // Si l'état vide est visible, vérifier son contenu (compatibilité FR/EN)
     if (await emptyState.isVisible()) {
       const emptyStateText = await emptyState.textContent();
       expect(emptyStateText).toMatch(/(Aucune tâche créée|No tasks created)/i);
-      expect(emptyStateText).toMatch(/(Créez votre première tâche|Create your first task)/i);
+      expect(emptyStateText).toMatch(/(Créez votre première tâche|Create your first|first automated task)/i);
     }
-    
-    // Vérifier que les compteurs sont à 0
-    await expect(page.locator('#activeCount')).toContainText('0');
-    await expect(page.locator('#pausedCount')).toContainText('0');
   });
 
   test('should maintain form state during mode switching', async ({ page }) => {

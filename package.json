@@ -5,10 +5,12 @@
   "main": "background.js",
   "scripts": {
     "build": "echo 'Extension prête pour le chargement manuel'",
-    "test": "playwright test",
-    "test:ui": "playwright test --ui",
-    "test:headed": "playwright test --headed",
-    "test:debug": "playwright test --debug",
+    "test": "playwright test --config=tests/playwright.config.js",
+    "test:extension": "node test-extension.js",
+    "test:extension:debug": "node test-extension.js --debug",
+    "test:ui": "playwright test --ui --config=tests/playwright.config.js",
+    "test:headed": "playwright test --headed --config=tests/playwright.config.js",
+    "test:debug": "playwright test --debug --config=tests/playwright.config.js",
     "test:report": "playwright show-report",
     "lint": "echo 'Linting non configuré'"
   },

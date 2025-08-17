@@ -11,5 +11,4 @@ node_modules
 # Résultats de tests
 test-results
 playwright-report
-tests/test-results.json
-
+.playwright-mcp/** 

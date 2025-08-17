@@ -69,7 +69,7 @@ L’architecture est centrée sur le dossier `extension/` :
 ## Contraintes
 
 - Apres chaque modifications visuelles, utiliser MCP Playwright pour valider que les changements sont biens corrects.
-- Documenter les changements dans les tests Playwright correspondants.
+- Implementer ou modifier les tests Playwright pour couvrir les nouveaux cas d'utilisation ou les changements de comportement. Lancer les tests, attendre les résultats et les examiner attentivement pour corriger ceux en erreur. Ne pas s'arreter tant que tout n'est pas corrigé.
 
 ---
 

@@ -1,0 +1,65 @@
+{
+    "kiroAgent.configureMCP": "Enabled",
+    "[markdown]": {
+        "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "always",
+        "source.organizeImports": "always",
+        "source.removeUnusedImports": "always"
+    },
+    "files.exclude": {
+        "**/.DS_Store": true,
+        "**/.git": true,
+        "**/.coverage": true,
+        "**/Thumbs.db": true,
+        "**/.ruff_cache": true
+    },
+    "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+    "github.copilot.chat.generateTests.codeLens": true,
+    "githubPullRequests.experimental.chat": true,
+    "i18n-ally.keysInUse": [
+        "date.long.*",
+        "yeah"
+    ],
+    "i18n-ally.keystyle": "nested",
+    "i18n-ally.localesPaths": [
+        "frontend/src/locales"
+    ],
+    "i18n-ally.regex.key": ".*?",
+    "i18n-ally.sourceLanguage": "fr",
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "markdownlint.config": {
+        "MD044": false,
+        "MD030": false,
+        "no-space-in-emphasis": true,
+        "no-trailing-spaces": true,
+        "no-space-before-colon": {
+            "enabled": true
+        }
+    },
+    // Configuration moderne pour Ruff avec le serveur de langage natif
+    "ruff.nativeServer": "on",
+    "ruff.lineLength": 92,
+    "ruff.configuration": {
+        "lint": {
+            "select": [
+                "E",
+                "F",
+                "W",
+                "I001",
+                "B",
+                "C",
+                "UP",
+                "N",
+                "D",
+                "SIM",
+                "TCH",
+                "RUF"
+            ]
+        }
+    },
+}

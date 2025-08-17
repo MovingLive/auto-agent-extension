@@ -14,16 +14,31 @@
     </div>
 
     <div class="container relative z-10">
-        <!-- Header futuriste -->
+        <!-- Header futuriste optimisé -->
         <div class="header group">
             <div class="header-top">
-                <!-- Titre centré -->
-                <div class="header-center">
+                <!-- Titre principal -->
+                <div class="header-main">
                     <h1 data-i18n="appTitle">
                         <span class="header-robot">🤖</span>
                         <span class="header-title">AutoAgent</span>
                         <span class="header-ai-badge">AI</span>
                     </h1>
+                    <!-- Indicateurs de tâches compacts -->
+                    <div class="header-tasks-section">
+                        <div id="taskStatusIndicators" class="task-indicators-compact">
+                            <div class="indicator-badge indicator-active" title="Tâches actives en cours d'exécution" data-i18n-title="activeTasksTooltip">
+                                <div class="indicator-dot dot-active"></div>
+                                <span id="activeCount" class="indicator-count">0</span>
+                                <span class="indicator-label" data-i18n="activeShort">Actives</span>
+                            </div>
+                            <div class="indicator-badge indicator-paused" title="Tâches en pause (non exécutées)" data-i18n-title="pausedTasksTooltip">
+                                <div class="indicator-dot dot-paused"></div>
+                                <span id="pausedCount" class="indicator-count">0</span>
+                                <span class="indicator-label" data-i18n="pausedShort">En pause</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- Boutons de langue positionnés absolument -->
                 <div class="language-selector-compact">
@@ -156,25 +171,34 @@
             </div>
         </div>
 
-        <!-- Titre de section avec indicateurs -->
-        <div class="task-section-header">
-            <div class="flex items-center justify-between w-full">
-                <h2 data-i18n="myTasks" class="text-cyan-400 font-semibold text-xl tracking-wide flex items-center gap-3">
-                    <span class="text-xl">📋</span>
-                    <span>Mes tâches</span>
-                </h2>
-                <div id="taskStatusIndicators" class="task-indicators">
-                    <div class="indicator-badge indicator-active">
-                        <div class="indicator-dot dot-active"></div>
-                        <span id="activeCount" class="indicator-count">0</span>
-                    </div>
-                    <div class="indicator-badge indicator-paused">
-                        <div class="indicator-dot dot-paused"></div>
-                        <span id="pausedCount" class="indicator-count">0</span>
+        <!-- Section des tâches manquées -->
+        <div id="missedTasksSection" class="missed-tasks-section" style="display: none;">
+            <div class="missed-tasks-header">
+                <div class="flex items-center justify-between w-full">
+                    <h2 data-i18n="missedTasks" class="text-orange-400 font-semibold text-xl tracking-wide flex items-center gap-3">
+                        <span class="text-xl animate-pulse">⚠️</span>
+                        <span>Tâches manquées</span>
+                    </h2>
+                    <div class="missed-tasks-actions">
+                        <button type="button" id="executeAllMissedBtn" class="btn-execute-all" data-i18n="executeAll" title="Exécuter toutes les tâches manquées">
+                            <span class="flex items-center gap-2">
+                                <span class="text-sm">▶️</span>
+                                <span>Tout exécuter</span>
+                            </span>
+                        </button>
+                        <button type="button" id="dismissAllMissedBtn" class="btn-dismiss-all" data-i18n="dismissAll" title="Ignorer toutes les tâches manquées">
+                            <span class="flex items-center gap-2">
+                                <span class="text-sm">❌</span>
+                                <span>Tout ignorer</span>
+                            </span>
+                        </button>
                     </div>
                 </div>
             </div>
+            <div id="missedTasksList" class="missed-tasks-list space-y-3"></div>
         </div>
+
+
 
         <!-- Liste des tâches -->
         <div class="manage-section">
@@ -193,6 +217,13 @@
 
         <!-- Notifications -->
         <div id="notifications" class="notifications"></div>
+        
+        <!-- Indicateur de feedback discret -->
+        <div class="feedback-indicator">
+            <button type="button" id="feedbackBtn" class="feedback-btn" title="Donner votre avis ou signaler un problème" data-i18n-title="feedbackTooltip">
+                <span class="feedback-icon">💬</span>
+            </button>
+        </div>
     </div>
 
     <!-- Scripts -->

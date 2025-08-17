@@ -60,11 +60,22 @@ test.describe('AutoAgent - Interface de base', () => {
   });
 
   test('should display task list section', async ({ page }) => {
-    // Vérifier la section "Mes tâches" (accepter français ou anglais)
-    const tasksHeader = page.locator('[data-i18n="myTasks"]');
-    await expect(tasksHeader).toBeVisible();
-    const tasksHeaderText = await tasksHeader.textContent();
-    expect(tasksHeaderText).toMatch(/(Mes tâches|My tasks)/i);
+    // Attendre que l'interface soit initialisée
+    await page.waitForLoadState('domcontentloaded');
+    
+    // Vérifier que la liste des tâches existe dans le DOM
+    const tasksList = page.locator('#tasksList');
+    await expect(tasksList).toBeAttached(); // Existe dans le DOM
+    
+    // Vérifier l'état vide par défaut
+    const emptyState = page.locator('#emptyState');
+    await expect(emptyState).toBeVisible();
+    
+    // Vérifier le texte de l'état vide (accepter français ou anglais)
+    const emptyStateText = page.locator('[data-i18n="noTasks"]');
+    await expect(emptyStateText).toBeVisible();
+    const emptyText = await emptyStateText.textContent();
+    expect(emptyText).toMatch(/(Aucune tâche créée|No tasks created)/i);
     
     // Vérifier les indicateurs de statut
     const activeIndicator = page.locator('#activeCount');
