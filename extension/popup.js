@@ -529,7 +529,7 @@ function displayTasks() {
       }
       
       // Indicateur d'auto-exécution
-      const autoExecuteIndicator = (task.autoExecute !== false) ? 
+      const autoExecuteIndicator = (task.autoExecute === true) ? 
         `<span class="task-auto-execute-indicator">
           <span class="auto-execute-icon">⚡</span>
           <span data-i18n="autoShort">Auto</span>
