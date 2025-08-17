@@ -268,7 +268,7 @@ function editTask(taskId) {
   document.getElementById("promptText").value = task.prompt;
   
   // Restaurer l'état d'auto-exécution (par défaut true si non défini)
-  document.getElementById("autoExecuteCheckbox").checked = task.autoExecute !== false;
+  document.getElementById("autoExecuteCheckbox").checked = task.autoExecute ?? true;
 
   // Restaurer les données de planification
   if (task.schedulingData && task.schedulingData.type) {
