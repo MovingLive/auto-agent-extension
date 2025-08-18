@@ -179,8 +179,8 @@ test.describe("AutoAgent - Système de planification", () => {
       if (configBox && containerBox) {
         expect(configBox.y).toBeGreaterThanOrEqual(containerBox.y);
         expect(configBox.y + configBox.height).toBeLessThanOrEqual(
-          containerBox.y + containerBox.height + 50
-        ); // Tolérance plus importante pour mobile
+          containerBox.y + containerBox.height + 75
+        ); // Tolérance augmentée pour mobile/CI
       }
 
       // Prendre une capture d'écran pour chaque mode

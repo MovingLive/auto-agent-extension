@@ -763,7 +763,10 @@ test("should handle feedback button click properly", async ({ page }) => {
   });
 
   // Utiliser force: true pour éviter les problèmes de stabilité
-  await feedbackBtn.click({ force: true });
+    await feedbackBtn.click({ force: true });
+
+    // Attendre explicitement que l'action ait eu lieu (max 2s)
+    await page.waitForFunction(() => window.testTabCreateCalled === true, null, { timeout: 2000 });
 
   // Vérifier que chrome.tabs.create a été appelé
   const createCalled = await page.evaluate(() => window.testTabCreateCalled);

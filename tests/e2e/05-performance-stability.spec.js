@@ -96,8 +96,8 @@ test.describe('AutoAgent - Performance & Stabilité', () => {
   await page.goto('file://' + __dirname + '/../../extension/popup.html');
     await page.waitForLoadState('networkidle');
     
-    // Naviguer vers une autre page puis revenir
-    await page.goto('about:blank');
+    // Naviguer vers une page statique locale puis revenir
+    await page.goto('file://' + __dirname + '/../../extension/empty.html');
     await page.goBack();
     
     // Vérifier que l'interface fonctionne toujours

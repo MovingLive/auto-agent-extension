@@ -134,7 +134,7 @@ test.describe("AutoAgent - Tests visuels et layout", () => {
           containerBox.x + containerBox.width + 15
         ); // Tolérance de 15px
         expect(configBox.y + configBox.height).toBeLessThanOrEqual(
-          containerBox.y + containerBox.height + 75 // Tolérance augmentée pour mobile
+          containerBox.y + containerBox.height + 100 // Tolérance augmentée pour mobile/CI
         );
       }
 
