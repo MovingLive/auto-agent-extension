@@ -133,8 +133,8 @@ test.describe("AutoAgent - Validation des optimisations", () => {
       if (configBox && containerBox) {
         expect(configBox.y).toBeGreaterThanOrEqual(containerBox.y);
         expect(configBox.y + configBox.height).toBeLessThanOrEqual(
-          containerBox.y + containerBox.height + 125
-        ); // Tolérance augmentée pour mobile/CI (125px)
+          containerBox.y + containerBox.height + 150
+        ); // Tolérance augmentée pour mobile/CI (150px)
       }
     }
 

@@ -11,7 +11,7 @@
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 4
+      "actualWorkers": 2
     },
     "preserveOutput": "always",
     "reporter": [
@@ -37,7 +37,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 4
+          "actualWorkers": 2
         },
         "id": "chromium-extension",
         "name": "chromium-extension",
@@ -53,7 +53,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 4
+          "actualWorkers": 2
         },
         "id": "chromium",
         "name": "chromium",
@@ -69,23 +69,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 4
-        },
-        "id": "firefox",
-        "name": "firefox",
-        "testDir": "/Users/stevemagne/workspace/auto-agent-extension/tests/e2e",
-        "testIgnore": [],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
-        "timeout": 30000
-      },
-      {
-        "outputDir": "/Users/stevemagne/workspace/auto-agent-extension/test-results",
-        "repeatEach": 1,
-        "retries": 0,
-        "metadata": {
-          "actualWorkers": 4
+          "actualWorkers": 2
         },
         "id": "Mobile Chrome",
         "name": "Mobile Chrome",
@@ -106,20 +90,20 @@
   },
   "suites": [
     {
-      "title": "06-visual-layout.spec.js",
-      "file": "06-visual-layout.spec.js",
+      "title": "02-schedule-system.spec.js",
+      "file": "02-schedule-system.spec.js",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "AutoAgent - Tests visuels et layout",
-          "file": "06-visual-layout.spec.js",
+          "title": "AutoAgent - Système de planification",
+          "file": "02-schedule-system.spec.js",
           "line": 8,
           "column": 6,
           "specs": [
             {
-              "title": "should have consistent visual styling across all modes",
+              "title": "should display frequency selector with three modes",
               "ok": true,
               "tags": [],
               "tests": [
@@ -131,15 +115,15 @@
                   "projectName": "chromium-extension",
                   "results": [
                     {
-                      "workerIndex": 96,
+                      "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3904,
+                      "duration": 1054,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-08-18T14:02:13.132Z",
+                      "startTime": "2025-08-18T14:48:40.938Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -147,13 +131,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "9e24d5cac031722de3b4-a010a350b8032e6d49d9",
-              "file": "06-visual-layout.spec.js",
+              "id": "7e693adf57e4eb74c1ae-b8e50a14f591ba00d061",
+              "file": "02-schedule-system.spec.js",
               "line": 14,
               "column": 3
             },
             {
-              "title": "should maintain proper spacing and alignment",
+              "title": "should have hours mode active by default",
               "ok": true,
               "tags": [],
               "tests": [
@@ -165,15 +149,15 @@
                   "projectName": "chromium-extension",
                   "results": [
                     {
-                      "workerIndex": 96,
+                      "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1275,
+                      "duration": 815,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-08-18T14:02:17.371Z",
+                      "startTime": "2025-08-18T14:48:42.275Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -181,678 +165,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "9e24d5cac031722de3b4-365f6e98c03aa4813872",
-              "file": "06-visual-layout.spec.js",
-              "line": 48,
-              "column": 3
-            },
-            {
-              "title": "should have proper button hover states",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-extension",
-                  "projectName": "chromium-extension",
-                  "results": [
-                    {
-                      "workerIndex": 96,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 1761,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-08-18T14:02:18.652Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "9e24d5cac031722de3b4-5ae66fa9c457819e2d2a",
-              "file": "06-visual-layout.spec.js",
-              "line": 74,
-              "column": 3
-            },
-            {
-              "title": "should show proper focus indicators",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-extension",
-                  "projectName": "chromium-extension",
-                  "results": [
-                    {
-                      "workerIndex": 96,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 1822,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-08-18T14:02:20.423Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "9e24d5cac031722de3b4-9d663d8c0fe3cba668f8",
-              "file": "06-visual-layout.spec.js",
-              "line": 91,
-              "column": 3
-            },
-            {
-              "title": "should validate schedule container positioning",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-extension",
-                  "projectName": "chromium-extension",
-                  "results": [
-                    {
-                      "workerIndex": 96,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 3339,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-08-18T14:02:22.254Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "9e24d5cac031722de3b4-dda655f7803fb51a1803",
-              "file": "06-visual-layout.spec.js",
-              "line": 111,
-              "column": 3
-            },
-            {
-              "title": "should maintain consistent vertical alignment",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-extension",
-                  "projectName": "chromium-extension",
-                  "results": [
-                    {
-                      "workerIndex": 96,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 2018,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "Positions verticales des configurations: { hours: \u001b[33m461.171875\u001b[39m, days: \u001b[33m461.171875\u001b[39m, weeks: \u001b[33m461.18878173828125\u001b[39m }\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-08-18T14:02:25.600Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "9e24d5cac031722de3b4-388977df13e41f553852",
-              "file": "06-visual-layout.spec.js",
-              "line": 148,
-              "column": 3
-            },
-            {
-              "title": "should render icons and emojis correctly",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-extension",
-                  "projectName": "chromium-extension",
-                  "results": [
-                    {
-                      "workerIndex": 96,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 1269,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-08-18T14:02:27.625Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "9e24d5cac031722de3b4-fd5c5b7ac882713c5792",
-              "file": "06-visual-layout.spec.js",
-              "line": 174,
-              "column": 3
-            },
-            {
-              "title": "should have proper color scheme and contrast",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-extension",
-                  "projectName": "chromium-extension",
-                  "results": [
-                    {
-                      "workerIndex": 96,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 1001,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "Styles header: { color: \u001b[32m'rgb(255, 255, 255)'\u001b[39m, fontSize: \u001b[32m'28px'\u001b[39m }\n"
-                        },
-                        {
-                          "text": "Styles bouton: { backgroundColor: \u001b[32m'rgba(0, 0, 0, 0)'\u001b[39m, color: \u001b[32m'rgb(255, 255, 255)'\u001b[39m }\n"
-                        },
-                        {
-                          "text": "Styles bouton: { backgroundColor: \u001b[32m'rgba(0, 0, 0, 0)'\u001b[39m, color: \u001b[32m'rgb(255, 255, 255)'\u001b[39m }\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-08-18T14:02:28.897Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "9e24d5cac031722de3b4-4c9e188118fc00177fa0",
-              "file": "06-visual-layout.spec.js",
-              "line": 204,
-              "column": 3
-            },
-            {
-              "title": "should handle text overflow gracefully",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-extension",
-                  "projectName": "chromium-extension",
-                  "results": [
-                    {
-                      "workerIndex": 96,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 1285,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-08-18T14:02:29.901Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "9e24d5cac031722de3b4-40e6253df1ad73481908",
-              "file": "06-visual-layout.spec.js",
-              "line": 241,
-              "column": 3
-            },
-            {
-              "title": "should have consistent visual styling across all modes",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 98,
-                      "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 4043,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-08-18T14:02:13.135Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "9e24d5cac031722de3b4-34a893c29bca5d914b52",
-              "file": "06-visual-layout.spec.js",
-              "line": 14,
-              "column": 3
-            },
-            {
-              "title": "should maintain proper spacing and alignment",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 98,
-                      "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 1331,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-08-18T14:02:17.509Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "9e24d5cac031722de3b4-6648e414cb339a506229",
-              "file": "06-visual-layout.spec.js",
-              "line": 48,
-              "column": 3
-            },
-            {
-              "title": "should have proper button hover states",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 98,
-                      "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 1781,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-08-18T14:02:18.846Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "9e24d5cac031722de3b4-570700911d43cc789caa",
-              "file": "06-visual-layout.spec.js",
-              "line": 74,
-              "column": 3
-            },
-            {
-              "title": "should show proper focus indicators",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 98,
-                      "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 1606,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-08-18T14:02:20.639Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "9e24d5cac031722de3b4-aaa6079f7a64d5c17d38",
-              "file": "06-visual-layout.spec.js",
-              "line": 91,
-              "column": 3
-            },
-            {
-              "title": "should validate schedule container positioning",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 98,
-                      "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 3327,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-08-18T14:02:22.255Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "9e24d5cac031722de3b4-7c739b0239bf447bc008",
-              "file": "06-visual-layout.spec.js",
-              "line": 111,
-              "column": 3
-            },
-            {
-              "title": "should maintain consistent vertical alignment",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 98,
-                      "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 2041,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "Positions verticales des configurations: {\n  hours: \u001b[33m461.171875\u001b[39m,\n  days: \u001b[33m461.18878173828125\u001b[39m,\n  weeks: \u001b[33m461.1888122558594\u001b[39m\n}\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-08-18T14:02:25.586Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "9e24d5cac031722de3b4-caf4173f92441bd95490",
-              "file": "06-visual-layout.spec.js",
-              "line": 148,
-              "column": 3
-            },
-            {
-              "title": "should render icons and emojis correctly",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 98,
-                      "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 1242,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-08-18T14:02:27.632Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "9e24d5cac031722de3b4-697ada2cb755540df74a",
-              "file": "06-visual-layout.spec.js",
-              "line": 174,
-              "column": 3
-            },
-            {
-              "title": "should have proper color scheme and contrast",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 98,
-                      "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 1070,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "Styles header: { color: \u001b[32m'rgb(255, 255, 255)'\u001b[39m, fontSize: \u001b[32m'28px'\u001b[39m }\n"
-                        },
-                        {
-                          "text": "Styles bouton: { backgroundColor: \u001b[32m'rgba(0, 0, 0, 0)'\u001b[39m, color: \u001b[32m'rgb(255, 255, 255)'\u001b[39m }\n"
-                        },
-                        {
-                          "text": "Styles bouton: { backgroundColor: \u001b[32m'rgba(0, 0, 0, 0)'\u001b[39m, color: \u001b[32m'rgb(255, 255, 255)'\u001b[39m }\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-08-18T14:02:28.878Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "9e24d5cac031722de3b4-fd952e1ca5b7dd484194",
-              "file": "06-visual-layout.spec.js",
-              "line": 204,
-              "column": 3
-            },
-            {
-              "title": "should handle text overflow gracefully",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 98,
-                      "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 1239,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-08-18T14:02:29.951Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "9e24d5cac031722de3b4-1c06ebd655f22cd2d528",
-              "file": "06-visual-layout.spec.js",
-              "line": 241,
-              "column": 3
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "title": "08-optimization-validation.spec.js",
-      "file": "08-optimization-validation.spec.js",
-      "column": 0,
-      "line": 0,
-      "specs": [],
-      "suites": [
-        {
-          "title": "AutoAgent - Validation des optimisations",
-          "file": "08-optimization-validation.spec.js",
-          "line": 8,
-          "column": 6,
-          "specs": [
-            {
-              "title": "should keep all configurations inside the bordered container",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-extension",
-                  "projectName": "chromium-extension",
-                  "results": [
-                    {
-                      "workerIndex": 97,
-                      "parallelIndex": 1,
-                      "status": "passed",
-                      "duration": 3405,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "✅ Toutes les configurations restent dans le conteneur\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-08-18T14:02:13.131Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "928094ba266ec6afd18d-9e59b259c7a3e87af4b1",
-              "file": "08-optimization-validation.spec.js",
-              "line": 14,
-              "column": 3
-            },
-            {
-              "title": "should maintain perfect vertical alignment across modes",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium-extension",
-                  "projectName": "chromium-extension",
-                  "results": [
-                    {
-                      "workerIndex": 97,
-                      "parallelIndex": 1,
-                      "status": "passed",
-                      "duration": 1997,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "✅ Alignement vertical parfait maintenu: {\n  hours: \u001b[33m461.171875\u001b[39m,\n  days: \u001b[33m461.18878173828125\u001b[39m,\n  weeks: \u001b[33m461.1888427734375\u001b[39m\n}\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2025-08-18T14:02:16.873Z",
-                      "annotations": [],
-                      "attachments": []
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "928094ba266ec6afd18d-a016151c1233afca4b07",
-              "file": "08-optimization-validation.spec.js",
+              "id": "7e693adf57e4eb74c1ae-791005e949b68ffb6209",
+              "file": "02-schedule-system.spec.js",
               "line": 42,
               "column": 3
             },
             {
-              "title": "should have compact layout with optimized space usage",
+              "title": "should switch to days mode correctly",
               "ok": true,
               "tags": [],
               "tests": [
@@ -864,19 +183,15 @@
                   "projectName": "chromium-extension",
                   "results": [
                     {
-                      "workerIndex": 97,
-                      "parallelIndex": 1,
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1093,
+                      "duration": 1208,
                       "errors": [],
-                      "stdout": [
-                        {
-                          "text": "✅ Layout compact validé\n"
-                        }
-                      ],
+                      "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-08-18T14:02:18.881Z",
+                      "startTime": "2025-08-18T14:48:43.092Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -884,13 +199,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "928094ba266ec6afd18d-eb6d89098991ec93c0d0",
-              "file": "08-optimization-validation.spec.js",
-              "line": 70,
+              "id": "7e693adf57e4eb74c1ae-b99ea464a14874f32738",
+              "file": "02-schedule-system.spec.js",
+              "line": 65,
               "column": 3
             },
             {
-              "title": "should handle smooth transitions between modes",
+              "title": "should switch to weeks mode correctly",
               "ok": true,
               "tags": [],
               "tests": [
@@ -902,19 +217,15 @@
                   "projectName": "chromium-extension",
                   "results": [
                     {
-                      "workerIndex": 97,
-                      "parallelIndex": 1,
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3832,
+                      "duration": 1234,
                       "errors": [],
-                      "stdout": [
-                        {
-                          "text": "✅ Transitions fluides validées\n"
-                        }
-                      ],
+                      "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-08-18T14:02:19.983Z",
+                      "startTime": "2025-08-18T14:48:44.303Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -922,13 +233,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "928094ba266ec6afd18d-746c7b83908805abfcef",
-              "file": "08-optimization-validation.spec.js",
-              "line": 93,
+              "id": "7e693adf57e4eb74c1ae-3ad34be4fa118b90b876",
+              "file": "02-schedule-system.spec.js",
+              "line": 101,
               "column": 3
             },
             {
-              "title": "should validate the fixed container height and positioning",
+              "title": "should maintain configurations inside the bordered container",
               "ok": true,
               "tags": [],
               "tests": [
@@ -940,19 +251,15 @@
                   "projectName": "chromium-extension",
                   "results": [
                     {
-                      "workerIndex": 97,
-                      "parallelIndex": 1,
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1988,
+                      "duration": 2991,
                       "errors": [],
-                      "stdout": [
-                        {
-                          "text": "✅ Positionnement dans le conteneur validé\n"
-                        }
-                      ],
+                      "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-08-18T14:02:23.823Z",
+                      "startTime": "2025-08-18T14:48:45.539Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -960,13 +267,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "928094ba266ec6afd18d-8708ca90eb71da6d76c5",
-              "file": "08-optimization-validation.spec.js",
-              "line": 115,
+              "id": "7e693adf57e4eb74c1ae-de47b82e7664dadd86e1",
+              "file": "02-schedule-system.spec.js",
+              "line": 141,
               "column": 3
             },
             {
-              "title": "should capture final state for visual regression testing",
+              "title": "should allow editing time values",
               "ok": true,
               "tags": [],
               "tests": [
@@ -978,19 +285,15 @@
                   "projectName": "chromium-extension",
                   "results": [
                     {
-                      "workerIndex": 97,
-                      "parallelIndex": 1,
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3053,
+                      "duration": 1159,
                       "errors": [],
-                      "stdout": [
-                        {
-                          "text": "✅ États finaux capturés pour les tests de régression\n"
-                        }
-                      ],
+                      "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-08-18T14:02:25.816Z",
+                      "startTime": "2025-08-18T14:48:48.533Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -998,13 +301,47 @@
                   "status": "expected"
                 }
               ],
-              "id": "928094ba266ec6afd18d-afa75c5ea1bec1fb38a5",
-              "file": "08-optimization-validation.spec.js",
-              "line": 144,
+              "id": "7e693adf57e4eb74c1ae-95f9c645aff58ba4a52f",
+              "file": "02-schedule-system.spec.js",
+              "line": 193,
               "column": 3
             },
             {
-              "title": "should keep all configurations inside the bordered container",
+              "title": "should validate input ranges",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-extension",
+                  "projectName": "chromium-extension",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 909,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-08-18T14:48:49.695Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7e693adf57e4eb74c1ae-b7cc11a1b53ebee57ad3",
+              "file": "02-schedule-system.spec.js",
+              "line": 216,
+              "column": 3
+            },
+            {
+              "title": "should display frequency selector with three modes",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1016,19 +353,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 99,
-                      "parallelIndex": 3,
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 3274,
+                      "duration": 1044,
                       "errors": [],
-                      "stdout": [
-                        {
-                          "text": "✅ Toutes les configurations restent dans le conteneur\n"
-                        }
-                      ],
+                      "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-08-18T14:02:13.147Z",
+                      "startTime": "2025-08-18T14:48:40.929Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1036,13 +369,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "928094ba266ec6afd18d-2079702164d4270efdc6",
-              "file": "08-optimization-validation.spec.js",
+              "id": "7e693adf57e4eb74c1ae-dfd89dd0280bc78dc417",
+              "file": "02-schedule-system.spec.js",
               "line": 14,
               "column": 3
             },
             {
-              "title": "should maintain perfect vertical alignment across modes",
+              "title": "should have hours mode active by default",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1054,19 +387,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 99,
-                      "parallelIndex": 3,
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 2130,
+                      "duration": 809,
                       "errors": [],
-                      "stdout": [
-                        {
-                          "text": "✅ Alignement vertical parfait maintenu: { hours: \u001b[33m461.171875\u001b[39m, days: \u001b[33m461.171875\u001b[39m, weeks: \u001b[33m461.171875\u001b[39m }\n"
-                        }
-                      ],
+                      "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-08-18T14:02:16.739Z",
+                      "startTime": "2025-08-18T14:48:42.264Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1074,13 +403,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "928094ba266ec6afd18d-b2d871d29ba25f35d25c",
-              "file": "08-optimization-validation.spec.js",
+              "id": "7e693adf57e4eb74c1ae-a1823c85c55b5f4c5e84",
+              "file": "02-schedule-system.spec.js",
               "line": 42,
               "column": 3
             },
             {
-              "title": "should have compact layout with optimized space usage",
+              "title": "should switch to days mode correctly",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1092,19 +421,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 99,
-                      "parallelIndex": 3,
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 1104,
+                      "duration": 1209,
                       "errors": [],
-                      "stdout": [
-                        {
-                          "text": "✅ Layout compact validé\n"
-                        }
-                      ],
+                      "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-08-18T14:02:18.879Z",
+                      "startTime": "2025-08-18T14:48:43.078Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1112,13 +437,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "928094ba266ec6afd18d-6f358e1320fda4a9fe86",
-              "file": "08-optimization-validation.spec.js",
-              "line": 70,
+              "id": "7e693adf57e4eb74c1ae-5ca2a90f008027dd405d",
+              "file": "02-schedule-system.spec.js",
+              "line": 65,
               "column": 3
             },
             {
-              "title": "should handle smooth transitions between modes",
+              "title": "should switch to weeks mode correctly",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1130,19 +455,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 99,
-                      "parallelIndex": 3,
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 3805,
+                      "duration": 1198,
                       "errors": [],
-                      "stdout": [
-                        {
-                          "text": "✅ Transitions fluides validées\n"
-                        }
-                      ],
+                      "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-08-18T14:02:19.986Z",
+                      "startTime": "2025-08-18T14:48:44.290Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1150,13 +471,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "928094ba266ec6afd18d-877d8256abfc1adbdae1",
-              "file": "08-optimization-validation.spec.js",
-              "line": 93,
+              "id": "7e693adf57e4eb74c1ae-0ef2ac1fb30e866cd698",
+              "file": "02-schedule-system.spec.js",
+              "line": 101,
               "column": 3
             },
             {
-              "title": "should validate the fixed container height and positioning",
+              "title": "should maintain configurations inside the bordered container",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1168,19 +489,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 99,
-                      "parallelIndex": 3,
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 1990,
+                      "duration": 3072,
                       "errors": [],
-                      "stdout": [
-                        {
-                          "text": "✅ Positionnement dans le conteneur validé\n"
-                        }
-                      ],
+                      "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-08-18T14:02:23.797Z",
+                      "startTime": "2025-08-18T14:48:45.490Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1188,13 +505,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "928094ba266ec6afd18d-465008733d01abd33881",
-              "file": "08-optimization-validation.spec.js",
-              "line": 115,
+              "id": "7e693adf57e4eb74c1ae-d50d310cbd855736a7b8",
+              "file": "02-schedule-system.spec.js",
+              "line": 141,
               "column": 3
             },
             {
-              "title": "should capture final state for visual regression testing",
+              "title": "should allow editing time values",
               "ok": true,
               "tags": [],
               "tests": [
@@ -1206,19 +523,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 99,
-                      "parallelIndex": 3,
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 3099,
+                      "duration": 1139,
                       "errors": [],
-                      "stdout": [
-                        {
-                          "text": "✅ États finaux capturés pour les tests de régression\n"
-                        }
-                      ],
+                      "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-08-18T14:02:25.794Z",
+                      "startTime": "2025-08-18T14:48:48.564Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1226,9 +539,43 @@
                   "status": "expected"
                 }
               ],
-              "id": "928094ba266ec6afd18d-05b0304fd1a1c7d71aa0",
-              "file": "08-optimization-validation.spec.js",
-              "line": 144,
+              "id": "7e693adf57e4eb74c1ae-a0bcb426ed4876bd4b10",
+              "file": "02-schedule-system.spec.js",
+              "line": 193,
+              "column": 3
+            },
+            {
+              "title": "should validate input ranges",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 882,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-08-18T14:48:49.707Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7e693adf57e4eb74c1ae-73f3484b6e7fe6eba974",
+              "file": "02-schedule-system.spec.js",
+              "line": 216,
               "column": 3
             }
           ]
@@ -1238,9 +585,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-08-18T14:02:12.512Z",
-    "duration": 18701.787000000477,
-    "expected": 30,
+    "startTime": "2025-08-18T14:48:40.090Z",
+    "duration": 10535.330000000075,
+    "expected": 14,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
