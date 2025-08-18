@@ -129,12 +129,10 @@ test.describe("AutoAgent - Validation des optimisations", () => {
       const config = page.locator(`#${mode}Config`);
       const configBox = await config.boundingBox();
 
-      // Vérifier que la configuration est dans le conteneur
+      // Vérifier que la configuration est dans le conteneur via helper
+      const { assertContainedOrThrow } = require("../helpers/layout");
       if (configBox && containerBox) {
-        expect(configBox.y).toBeGreaterThanOrEqual(containerBox.y);
-        expect(configBox.y + configBox.height).toBeLessThanOrEqual(
-          containerBox.y + containerBox.height + 200
-        ); // Tolérance augmentée pour mobile/CI (200px)
+        assertContainedOrThrow(containerBox, configBox);
       }
     }
 
