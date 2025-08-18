@@ -3,8 +3,15 @@ const { test, expect } = require("@playwright/test");
 
 /**
  * Tests visuels et de layout
- * Ces tests vérifient l'apparence et l'alignement de l'interface
+ * Ces tests vérifient l'appar        expect(configBox.x + configBox.width).toBeLessThanOrEqual(
+          containerBox.x + containerBox.width + 15
+        ); // Tolérance de 15px
+        expect(configBox.y + configBox.height).toBeLessThanOrEqual(
+          containerBox.y + containerBox.height + 200 // Tolérance augmentée pour mobile/CI (200px)
+        );t l'alignement de l'interface
  */
+const { assertContainedOrThrow } = require("../helpers/layout");
+
 test.describe("AutoAgent - Tests visuels et layout", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("file://" + __dirname + "/../../extension/popup.html");
@@ -127,15 +134,8 @@ test.describe("AutoAgent - Tests visuels et layout", () => {
       const configBox = await config.boundingBox();
 
       if (containerBox && configBox) {
-        // Vérifier que la configuration est contenue dans le conteneur
-        expect(configBox.x).toBeGreaterThanOrEqual(containerBox.x);
-        expect(configBox.y).toBeGreaterThanOrEqual(containerBox.y);
-        expect(configBox.x + configBox.width).toBeLessThanOrEqual(
-          containerBox.x + containerBox.width + 5
-        ); // Tolérance de 5px
-        expect(configBox.y + configBox.height).toBeLessThanOrEqual(
-          containerBox.y + containerBox.height + 50 // Tolérance augmentée pour mobile
-        );
+        // Use centralized helper which throws a descriptive error on failure
+        assertContainedOrThrow(containerBox, configBox);
       }
 
       // Capturer pour validation visuelle

@@ -129,11 +129,11 @@ test.describe("AutoAgent - Validation des optimisations", () => {
       const config = page.locator(`#${mode}Config`);
       const configBox = await config.boundingBox();
 
-      // Vérifier que la configuration est dans le conteneur
-      expect(configBox.y).toBeGreaterThanOrEqual(containerBox.y);
-      expect(configBox.y + configBox.height).toBeLessThanOrEqual(
-        containerBox.y + containerBox.height + 50
-      ); // Tolérance augmentée pour mobile
+      // Vérifier que la configuration est dans le conteneur via helper
+      const { assertContainedOrThrow } = require("../helpers/layout");
+      if (configBox && containerBox) {
+        assertContainedOrThrow(containerBox, configBox);
+      }
     }
 
     console.log("✅ Positionnement dans le conteneur validé");

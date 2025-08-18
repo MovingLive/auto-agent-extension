@@ -1876,3 +1876,237 @@ ask-indicators-compact .indicator-label {
     font-size: 14px;
   }
 }
+
+/* ============================
+   OPTION D'AUTO-EXÉCUTION COMPACTE
+   ============================ */
+
+/* Version compacte sur une ligne */
+.auto-execute-option-compact {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  transition: var(--ai-transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.auto-execute-option-compact:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 193, 7, 0.3);
+}
+
+.auto-execute-option-compact::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 193, 7, 0.08), transparent);
+  transition: left 0.5s ease;
+}
+
+.auto-execute-option-compact:hover::before {
+  left: 100%;
+}
+
+.auto-execute-checkbox-compact {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  position: relative;
+  cursor: pointer;
+  transition: var(--ai-transition);
+  flex-shrink: 0;
+}
+
+.auto-execute-checkbox-compact:checked {
+  background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+  border-color: #ffc107;
+  box-shadow: 0 0 8px rgba(255, 193, 7, 0.3);
+}
+
+.auto-execute-checkbox-compact:checked::after {
+  content: '⚡';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10px;
+  color: #0a0a0f;
+  font-weight: bold;
+}
+
+.auto-execute-checkbox-compact:hover {
+  border-color: rgba(255, 193, 7, 0.4);
+  box-shadow: 0 0 6px rgba(255, 193, 7, 0.2);
+}
+
+.auto-execute-label-compact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.auto-execute-label-compact .icon-unicode {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.auto-execute-description-compact {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  font-weight: 400;
+  margin-left: 4px;
+  opacity: 0.8;
+}
+
+/* Responsive pour mobile */
+@media (max-width: 480px) {
+  .auto-execute-option-compact {
+    padding: 10px 14px;
+    gap: 10px;
+  }
+  
+  .auto-execute-label-compact {
+    font-size: 13px;
+    gap: 6px;
+  }
+  
+  .auto-execute-description-compact {
+    font-size: 11px;
+  }
+  
+  .auto-execute-checkbox-compact {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* Version encore plus compacte si besoin */
+.auto-execute-option-minimal {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  transition: var(--ai-transition);
+}
+
+.auto-execute-option-minimal:hover {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 193, 7, 0.2);
+}
+
+/* ============================
+   OPTION D'AUTO-EXÉCUTION (ANCIENNE VERSION)
+   ============================ */
+
+.auto-execute-option {
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.auto-execute-option::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 193, 7, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.auto-execute-option:hover::before {
+  left: 100%;
+}
+
+.auto-execute-checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--ai-border);
+  border-radius: 6px;
+  background: var(--ai-bg-glass);
+  position: relative;
+  cursor: pointer;
+  transition: var(--ai-transition);
+  flex-shrink: 0;
+}
+
+.auto-execute-checkbox:checked {
+  background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+  border-color: #ffc107;
+  box-shadow: 0 0 15px rgba(255, 193, 7, 0.3);
+}
+
+.auto-execute-checkbox:checked::after {
+  content: '⚡';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  color: #0a0a0f;
+  font-weight: bold;
+}
+
+.auto-execute-checkbox:hover {
+  border-color: rgba(255, 193, 7, 0.5);
+  box-shadow: 0 0 10px rgba(255, 193, 7, 0.2);
+}
+
+/* ============================
+   INDICATEUR AUTO-EXÉCUTION DANS LES TÂCHES
+   ============================ */
+
+.task-auto-execute-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(255, 152, 0, 0.15) 100%);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #ffc107;
+  position: relative;
+  overflow: hidden;
+}
+
+.task-auto-execute-indicator::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 193, 7, 0.2), transparent);
+  transition: left 2s ease;
+}
+
+.task-item:hover .task-auto-execute-indicator::before {
+  left: 100%;
+}
+
+.task-auto-execute-indicator .auto-execute-icon {
+  font-size: 10px;
+  filter: drop-shadow(0 0 2px rgba(255, 193, 7, 0.5));
+}

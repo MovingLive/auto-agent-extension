@@ -186,6 +186,7 @@ function createTask() {
     createdAt: new Date().toISOString(),
     lastRun: null,
     isActive: true,
+    autoExecute: document.getElementById("autoExecuteCheckbox").checked, // Nouvelle propriété
   };
 
   // Sauvegarde dans le storage
@@ -229,6 +230,9 @@ function createTask() {
 function resetForm() {
   document.getElementById("taskName").value = "";
   document.getElementById("promptText").value = "";
+  
+  // Réinitialiser l'option d'auto-exécution (activée par défaut)
+  document.getElementById("autoExecuteCheckbox").checked = true;
 
   // Réinitialiser les valeurs de planification
   document.getElementById("hourMinutes").value = "0";
@@ -262,6 +266,9 @@ function editTask(taskId) {
   // Populer le formulaire
   document.getElementById("taskName").value = task.name;
   document.getElementById("promptText").value = task.prompt;
+  
+  // Restaurer l'état d'auto-exécution (par défaut true si non défini)
+  document.getElementById("autoExecuteCheckbox").checked = task.autoExecute ?? true;
 
   // Restaurer les données de planification
   if (task.schedulingData && task.schedulingData.type) {
@@ -415,6 +422,7 @@ function updateTask() {
       prompt: promptText,
       intervalInMinutes: intervalInMinutes,
       schedulingData: schedulingData,
+      autoExecute: document.getElementById("autoExecuteCheckbox").checked, // Nouvelle propriété
     };
 
     chrome.storage.local.set({ cronTasks: tasks }, () => {
@@ -519,6 +527,14 @@ function displayTasks() {
         const minutes = String(createdDate.getMinutes()).padStart(2, "0");
         planningTime = `à ${hours}:${minutes}`;
       }
+      
+      // Indicateur d'auto-exécution
+      const autoExecuteIndicator = (task.autoExecute === true) ? 
+        `<span class="task-auto-execute-indicator">
+          <span class="auto-execute-icon">⚡</span>
+          <span data-i18n="autoShort">Auto</span>
+        </span>` : '';
+      
       return `
         <div class="task-item" data-task-id="${task.id}">
             <div class="task-header">
@@ -553,6 +569,7 @@ function displayTasks() {
                 </span> • 
                 ${getTaskDescription(task)}
                 ${planningTime ? " • " + planningTime : ""}
+                ${autoExecuteIndicator ? " • " + autoExecuteIndicator : ""}
             </div>
             <div class="task-prompt">${escapeHtml(task.prompt)}</div>
         </div>

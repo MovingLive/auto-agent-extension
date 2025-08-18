@@ -1,7 +1,5 @@
 # ZIPs de build
 auto-agent-extension
-auto-agent-extension-v*.zip
-
 # Fichiers système
 .DS_Store
 
@@ -12,3 +10,4 @@ node_modules
 test-results
 playwright-report
 .playwright-mcp/** 
+**.zip

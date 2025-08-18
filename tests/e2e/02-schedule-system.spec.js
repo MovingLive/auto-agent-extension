@@ -138,6 +138,8 @@ test.describe("AutoAgent - Système de planification", () => {
     });
   });
 
+  const { assertContainedOrThrow } = require("../helpers/layout");
+
   test("should maintain configurations inside the bordered container", async ({
     page,
   }) => {
@@ -175,12 +177,9 @@ test.describe("AutoAgent - Système de planification", () => {
       expect(configBox).toBeTruthy();
       expect(containerBox).toBeTruthy();
 
-      // Vérifier que la configuration est bien dans le conteneur (avec vérifications null)
+      // Use centralized assertion helper (throws with clear message)
       if (configBox && containerBox) {
-        expect(configBox.y).toBeGreaterThanOrEqual(containerBox.y);
-        expect(configBox.y + configBox.height).toBeLessThanOrEqual(
-          containerBox.y + containerBox.height + 50
-        ); // Tolérance plus importante pour mobile
+        assertContainedOrThrow(containerBox, configBox);
       }
 
       // Prendre une capture d'écran pour chaque mode
